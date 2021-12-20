@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1010d3fc61d2579498d7a6154a106cad, type: 3}
+  m_Name: Battle Shout
+  m_EditorClassIdentifier: 
+  id: ce247e4e098312246a6a943cafcdb1bd
+  Name: Battle Shout
+  Icon: {fileID: 21300000, guid: 71d3545b3ef239d4fbb3345c0378b13c, type: 3}
+  MaximumStacks: 1
+  itemType: 0
+  isConsumable: 0
+  TimedStatEffects:
+  - name: ghk
+    id: timed_effect.-669866448
+    Icon: {fileID: 0}
+    effectType: 4
+    statItEffects: 0
+    Amount: 50
+    _Duration: 22
+    _isInBattle: 0
+    targetStat:
+      _baseValue: 0
+      _calculatedValue: 0
+  InstantStatEffects: []

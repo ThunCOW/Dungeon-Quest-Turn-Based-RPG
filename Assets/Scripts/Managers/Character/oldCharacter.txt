@@ -1,0 +1,122 @@
+    // Would checking your vision first be better?
+    // YES if you can see enemy without being in range of aggro
+        // 1. Check vision -> have list of characters within -> calculate the distance of closest enemy to you -> if in range, start combat
+            // this requires no collider
+        // 2. Have list of characters within aggro range -> Remove characters not in your vision -> if sees an enemy, start combat
+            // this requires collider to find characters
+    // NO if your vision is your aggro range
+        // Check vision -> have list of characters within -> if found an enemy, start combat
+    
+    // right now only check
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
+        Character charInRange = other.GetComponent<Character>();
+        if(charInRange != null) // if is a character
+        {
+            charactersInRange.Add(charInRange);
+        }
+        // There is going to be neutral characters
+        // Neutral to player or neutral to all ? or neutral to certain enemies ?
+        // Right now it enters here for every object with collider other than objects with same tag as itself
+        if(!other.CompareTag(gameObject.tag))   // if targeted character is NOT in the same group as ours
+        {
+            Character targetedCharacter= other.GetComponent<Character>();
+            if(targetedCharacter != null)                                       // if collider does not have character class, it shouldn't enter
+            {
+                StartCoroutine(AggroCheck(targetedCharacter));
+            }
+            else
+            {
+                // Enters here when a random object with collider entered our collider
+                //Debug.LogError("Failed to start a combat, make sure characters have right Tags");
+            }
+        }
+        else
+        {
+            // Enters when a character with same group entered our circle
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other) 
+    {
+        Character charInRange = other.GetComponent<Character>();
+        if(charInRange != null) // if is a character
+        {
+            charactersInRange.Remove(charInRange);
+        }
+    }
+
+    // Check for aggro every time characters moves
+    // Check for all closest characters, 
+    // Check how many of them is in your vision, 
+    // Check if they are is in combat, if in then join their battle
+    public float wait;
+    protected IEnumerator AggroCheck(Character targetedCharacter)
+    {
+        float waitFor = Random.Range(0f, .8f);
+        yield return new WaitForSeconds(waitFor);   // so not all characters run this script in the same time
+
+        if(battleState == BattleState.Ended)                // if we are NOT in combat
+        {
+            if(targetedCharacter.battleState == BattleState.Ended)  // if targeted character is NOT in combat
+            {
+                if(turnBasedCombat == null) // This should be null, if it is not there is a problem since character is not in combat state
+                {
+                    //TODO: this is removed for now
+                    //turnBasedBattleActivate.StartCombat(this, targetedCharacter);
+                }
+                else
+                {
+                    Debug.LogError(this.name + " character is not in combat but connected to a battle!\nFailed to start combat!");
+                }
+            }
+            else    // if target is in combat already, this character joins too
+            {
+                targetedCharacter.turnBasedCombat.JoinBattle(this);
+            }
+        }
+        else                                                // if we ARE in combat
+        {
+            // Do nothing for now, targeted character can join battle itself when it runs it's own script
+        }
+
+        for(int i = 0; i < charactersInRange.Count; i++)
+        {
+            if(charactersInRange[i].battleState == BattleState.Ended)   // if character in range is not in combat,
+            {
+                // this can't be targeted character since it is already joined/started combat
+                // the other way to handle this is that all ai character share their vision with each other, 
+                // that way when one of them sees player all of them sees at the same time.
+                //charactersInRange[i].AggroCheck(targetedCharacter);
+            }
+        }
+        
+        
+        // we should check if targetedCharacter is in battle first
+        /*if(targetedCharacter.battleState == BattleState.Ended)      // if targeted character is NOT in combat
+        {
+            if(turnBasedCombat == null) // if this character is not in combat, we start a combat ( we can check this is in turnBasedBattleActivate class )
+            {
+                turnBasedBattleActivate.StartCombat(this, targetedCharacter);
+                // if we set it to private, we can handle it here
+                //turnBasedCombat = turnBasedBattleActivate.StartCombat(this, targetedCharacter);
+                // Targeted character also joins battle
+                //targetedCharacter.turnBasedCombat = turnBasedCombat.JoinBattle(this);
+            }
+            else                        // if this character is in a battle already, targetedCharacter joins battle
+            {
+                //turnBasedCombat.JoinBattle(targetedCharacter);
+            }
+        }
+        else if(battleState == BattleState.Ended)                   // if this character is NOT in combat
+        {
+            targetedCharacter.turnBasedCombat.JoinBattle(this);
+            // if we set it to private, we can handle it here
+            // if targeted character is IN in fact combat, join their battle
+            //turnBasedCombat = targetedCharacter.turnBasedCombat.JoinBattle(this);
+        }
+        else
+        {
+            // enters here when both character is in combat already
+            // enters here when this character is in same(?) combat as targeted character
+        }*/
+    }

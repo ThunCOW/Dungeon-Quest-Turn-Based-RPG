@@ -1,0 +1,1024 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="ShadowCorner2.svg">
+  <defs
+     id="defs2">
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter891"
+       x="-0.28603136"
+       width="1.5720627"
+       y="-0.059792911"
+       height="1.1195858">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.21093609"
+         id="feGaussianBlur893" />
+    </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath907">
+      <rect
+         style="fill:#b54646;fill-opacity:1;stroke-width:0.112915;stop-color:#000000"
+         id="rect909"
+         width="8.4666662"
+         height="8.4666605"
+         x="108.76316"
+         y="168.68567" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath953">
+      <rect
+         style="fill:#b54646;fill-opacity:1;stroke-width:0.123717;stop-color:#000000"
+         id="rect955"
+         width="8.4666662"
+         height="8.4666634"
+         x="108.76316"
+         y="184.34448" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1025">
+      <rect
+         style="fill:#b54646;fill-opacity:1;stroke-width:0.131825;stop-color:#000000"
+         id="rect1027"
+         width="8.4666662"
+         height="8.4666595"
+         x="108.76317"
+         y="202.17162" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1098">
+      <rect
+         style="fill:#b54646;fill-opacity:0.975807;stroke-width:0.149014;stop-color:#000000"
+         id="rect1100"
+         width="8.4666662"
+         height="8.4666576"
+         x="108.76316"
+         y="219.30586" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1080">
+      <rect
+         style="fill:#b54646;fill-opacity:0.975807;stroke-width:0.0980273;stop-color:#000000"
+         id="rect1082"
+         width="8.4666662"
+         height="8.4666691"
+         x="214.44458"
+         y="184.34447" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1125">
+      <rect
+         style="fill:#b54646;fill-opacity:0.975807;stroke-width:0.0980273;stop-color:#000000"
+         id="rect1127"
+         width="8.4666662"
+         height="8.4666691"
+         x="214.44458"
+         y="184.34447" />
+    </clipPath>
+    <clipPath
+       id="clipPath1231"
+       clipPathUnits="userSpaceOnUse">
+      <rect
+         style="fill:#b54646;fill-opacity:0.975807;stroke-width:0.0980273;stop-color:#000000"
+         id="rect1233"
+         width="8.4666662"
+         height="8.4666691"
+         x="214.44458"
+         y="205.51115" />
+    </clipPath>
+    <clipPath
+       id="clipPath1239"
+       clipPathUnits="userSpaceOnUse">
+      <rect
+         transform="rotate(90)"
+         y="-244.19701"
+         x="205.50685"
+         height="8.4666691"
+         width="8.4666662"
+         id="rect1241"
+         style="fill:#b54646;fill-opacity:0.975807;stroke-width:0.0980273;stop-color:#000000" />
+    </clipPath>
+    <clipPath
+       id="clipPath1271"
+       clipPathUnits="userSpaceOnUse">
+      <rect
+         style="fill:#b54646;fill-opacity:0.975807;stroke-width:0.0980273;stop-color:#000000"
+         id="rect1273"
+         width="8.4666662"
+         height="8.4666691"
+         x="-262.26288"
+         y="-214.02658"
+         transform="scale(-1)" />
+    </clipPath>
+    <clipPath
+       id="clipPath1275"
+       clipPathUnits="userSpaceOnUse">
+      <rect
+         transform="rotate(-90)"
+         y="282.55896"
+         x="-214.03088"
+         height="8.4666691"
+         width="8.4666662"
+         id="rect1277"
+         style="fill:#b54646;fill-opacity:0.975807;stroke-width:0.0980273;stop-color:#000000" />
+    </clipPath>
+    <clipPath
+       id="clipPath1279"
+       clipPathUnits="userSpaceOnUse">
+      <rect
+         transform="rotate(-90)"
+         style="fill:#b54646;fill-opacity:0.975807;stroke-width:0.0980273;stop-color:#000000"
+         id="rect1281"
+         width="8.4666662"
+         height="8.4666691"
+         x="-234.5742"
+         y="283.7998" />
+    </clipPath>
+    <clipPath
+       id="clipPath1283"
+       clipPathUnits="userSpaceOnUse">
+      <rect
+         y="-234.5699"
+         x="-265.70975"
+         height="8.4666691"
+         width="8.4666662"
+         id="rect1285"
+         style="fill:#b54646;fill-opacity:0.975807;stroke-width:0.0980273;stop-color:#000000"
+         transform="scale(-1)" />
+    </clipPath>
+    <clipPath
+       id="clipPath1287"
+       clipPathUnits="userSpaceOnUse">
+      <rect
+         transform="rotate(90)"
+         style="fill:#b54646;fill-opacity:0.975807;stroke-width:0.0980273;stop-color:#000000"
+         id="rect1289"
+         width="8.4666662"
+         height="8.4666691"
+         x="226.05017"
+         y="-246.12724" />
+    </clipPath>
+    <clipPath
+       id="clipPath1291"
+       clipPathUnits="userSpaceOnUse">
+      <rect
+         y="226.05447"
+         x="214.44458"
+         height="8.4666691"
+         width="8.4666662"
+         id="rect1293"
+         style="fill:#b54646;fill-opacity:0.975807;stroke-width:0.0980273;stop-color:#000000" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.8380282"
+     inkscape:cx="1064.4822"
+     inkscape:cy="714.63241"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="715"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="true" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <image
+       y="167.06537"
+       x="13.889291"
+       width="8.4666662"
+       height="8.4666662"
+       preserveAspectRatio="none"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA GXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAADBJREFUWIXtzjEBADAMw7Cs/DFn hdFHJmC9tj+HzeUcAAAAAAAAAAAAAAAAAAAgSRYdLgQ5uYcD7QAAAABJRU5ErkJggg== "
+       id="image843"
+       style="fill:#bdbc4a;fill-opacity:1" />
+    <image
+       id="image853"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA GXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAADBJREFUWIXtzjEBADAMw7Cs/DFn hdFHJmC9tj+HzeUcAAAAAAAAAAAAAAAAAAAgSRYdLgQ5uYcD7QAAAABJRU5ErkJggg== "
+       preserveAspectRatio="none"
+       height="8.4666662"
+       width="1.769899"
+       x="10.663995"
+       y="167.06537"
+       style="mix-blend-mode:normal;fill:#030101;fill-opacity:1" />
+    <g
+       id="g905"
+       clip-path="url(#clipPath907)"
+       transform="translate(-77.997641,15.954063)">
+      <rect
+         y="168.68567"
+         x="109.56399"
+         height="8.4666662"
+         width="7.6658382"
+         id="rect871"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.14273;stop-color:#000000" />
+      <rect
+         transform="matrix(0.93046794,0,0,1.3518639,7.6013613,-60.722091)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect885"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000" />
+    </g>
+    <g
+       clip-path="url(#clipPath907)"
+       id="g915"
+       transform="rotate(90,75.285068,151.15896)">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.14273;stop-color:#000000"
+         id="rect911"
+         width="7.6658382"
+         height="8.4666662"
+         x="109.56399"
+         y="168.68567" />
+      <rect
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect913"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(0.93046794,0,0,1.3518639,7.6013613,-60.722091)" />
+    </g>
+    <g
+       transform="rotate(180,91.93193,180.89603)"
+       id="g927"
+       clip-path="url(#clipPath907)">
+      <rect
+         y="168.68567"
+         x="109.56399"
+         height="8.4666662"
+         width="7.6658382"
+         id="rect923"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.14273;stop-color:#000000" />
+      <rect
+         transform="matrix(0.93046794,0,0,1.3518639,7.6013613,-60.722091)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect925"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000" />
+    </g>
+    <g
+       clip-path="url(#clipPath907)"
+       id="g933"
+       transform="rotate(-90,109.20553,192.6667)">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.14273;stop-color:#000000"
+         id="rect929"
+         width="7.6658382"
+         height="8.4666662"
+         x="109.56399"
+         y="168.68567" />
+      <rect
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect931"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(0.93046794,0,0,1.3518639,7.6013613,-60.722091)" />
+    </g>
+    <g
+       id="g951"
+       clip-path="url(#clipPath953)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.135752;stop-color:#000000"
+         id="rect935"
+         width="6.9346476"
+         height="8.4666662"
+         x="110.29518"
+         y="184.34448" />
+      <rect
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect937"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(1.4683144,0,0,1.3201373,-51.06832,-39.577132)" />
+    </g>
+    <g
+       clip-path="url(#clipPath953)"
+       id="g961"
+       transform="rotate(90,122.1886,197.76992)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         y="184.34448"
+         x="110.29518"
+         height="8.4666662"
+         width="6.9346476"
+         id="rect957"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.135752;stop-color:#000000" />
+      <rect
+         transform="matrix(1.4683144,0,0,1.3201373,-51.06832,-39.577132)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect959"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000" />
+    </g>
+    <g
+       transform="rotate(180,131.20662,188.57781)"
+       id="g967"
+       clip-path="url(#clipPath953)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.135752;stop-color:#000000"
+         id="rect963"
+         width="6.9346476"
+         height="8.4666662"
+         x="110.29518"
+         y="184.34448" />
+      <rect
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect965"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(1.4683144,0,0,1.3201373,-51.06832,-39.577132)" />
+    </g>
+    <g
+       clip-path="url(#clipPath953)"
+       id="g973"
+       transform="rotate(-90,140.29427,161.28003)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         y="184.34448"
+         x="110.29518"
+         height="8.4666662"
+         width="6.9346476"
+         id="rect969"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.135752;stop-color:#000000" />
+      <rect
+         transform="matrix(1.4683144,0,0,1.3201373,-51.06832,-39.577132)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect971"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000" />
+    </g>
+    <g
+       id="g1019"
+       clip-path="url(#clipPath1025)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         y="203.89674"
+         x="110.29518"
+         height="6.7415285"
+         width="6.9346476"
+         id="rect975"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.121135;stop-color:#000000" />
+      <path
+         inkscape:transform-center-y="0.10042681"
+         inkscape:transform-center-x="2.36972"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         transform="matrix(1.4683144,0,0,1.0768303,-51.06832,21.352408)"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect977" />
+      <path
+         id="path1014"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         transform="matrix(0,1.5283926,-1.0784528,0,300.42235,35.729886)"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         inkscape:transform-center-x="0.10057325"
+         inkscape:transform-center-y="-2.4666744" />
+    </g>
+    <g
+       clip-path="url(#clipPath1025)"
+       id="g1035"
+       transform="rotate(90,122.1538,215.56224)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.121135;stop-color:#000000"
+         id="rect1029"
+         width="6.9346476"
+         height="6.7415285"
+         x="110.29518"
+         y="203.89674" />
+      <path
+         id="path1031"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         transform="matrix(1.4683144,0,0,1.0768303,-51.06832,21.352408)"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         inkscape:transform-center-x="2.36972"
+         inkscape:transform-center-y="0.10042681" />
+      <path
+         inkscape:transform-center-y="-2.4666744"
+         inkscape:transform-center-x="0.10057325"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         transform="matrix(0,1.5283926,-1.0784528,0,300.42235,35.729886)"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="path1033" />
+    </g>
+    <g
+       transform="rotate(180,131.52,206.40494)"
+       id="g1043"
+       clip-path="url(#clipPath1025)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         y="203.89674"
+         x="110.29518"
+         height="6.7415285"
+         width="6.9346476"
+         id="rect1037"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.121135;stop-color:#000000" />
+      <path
+         inkscape:transform-center-y="0.10042681"
+         inkscape:transform-center-x="2.36972"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         transform="matrix(1.4683144,0,0,1.0768303,-51.06832,21.352408)"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="path1039" />
+      <path
+         id="path1041"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         transform="matrix(0,1.5283926,-1.0784528,0,300.42235,35.729886)"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         inkscape:transform-center-x="0.10057325"
+         inkscape:transform-center-y="-2.4666744" />
+    </g>
+    <g
+       clip-path="url(#clipPath1025)"
+       id="g1051"
+       transform="rotate(-90,140.43355,178.96788)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.121135;stop-color:#000000"
+         id="rect1045"
+         width="6.9346476"
+         height="6.7415285"
+         x="110.29518"
+         y="203.89674" />
+      <path
+         id="path1047"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         transform="matrix(1.4683144,0,0,1.0768303,-51.06832,21.352408)"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         inkscape:transform-center-x="2.36972"
+         inkscape:transform-center-y="0.10042681" />
+      <path
+         inkscape:transform-center-y="-2.4666744"
+         inkscape:transform-center-x="0.10057325"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         transform="matrix(0,1.5283926,-1.0784528,0,300.42235,35.729886)"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="path1049" />
+    </g>
+    <g
+       id="g1096"
+       clip-path="url(#clipPath1098)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.108186;stop-color:#000000"
+         id="rect1053"
+         width="5.531281"
+         height="6.7415285"
+         x="110.29518"
+         y="221.03259" />
+      <path
+         id="path1055"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         transform="matrix(1.4683144,0,0,1.0768303,-51.06832,38.488253)"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         inkscape:transform-center-x="2.36972"
+         inkscape:transform-center-y="0.10042681" />
+      <path
+         inkscape:transform-center-y="-0.10042425"
+         inkscape:transform-center-x="-2.3697239"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         transform="matrix(-1.4683144,0,0,-1.0768303,277.04793,410.69625)"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="path1070" />
+      <path
+         inkscape:transform-center-y="-2.5373802"
+         inkscape:transform-center-x="0.078226189"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         transform="matrix(0,1.5722067,-0.83874881,0,257.93525,48.040999)"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="path1057" />
+    </g>
+    <g
+       clip-path="url(#clipPath1098)"
+       id="g1110"
+       transform="rotate(90,122.07029,232.61299)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         y="221.03259"
+         x="110.29518"
+         height="6.7415285"
+         width="5.531281"
+         id="rect1102"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.108186;stop-color:#000000" />
+      <path
+         inkscape:transform-center-y="0.10042681"
+         inkscape:transform-center-x="2.36972"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         transform="matrix(1.4683144,0,0,1.0768303,-51.06832,38.488253)"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="path1104" />
+      <path
+         id="path1106"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         transform="matrix(-1.4683144,0,0,-1.0768303,277.04793,410.69625)"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         inkscape:transform-center-x="-2.3697239"
+         inkscape:transform-center-y="-0.10042425" />
+      <path
+         id="path1108"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         transform="matrix(0,1.5722067,-0.83874881,0,257.93525,48.040999)"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         inkscape:transform-center-x="0.078226189"
+         inkscape:transform-center-y="-2.5373802" />
+    </g>
+    <g
+       transform="rotate(180,131.7989,223.53919)"
+       id="g1120"
+       clip-path="url(#clipPath1098)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.108186;stop-color:#000000"
+         id="rect1112"
+         width="5.531281"
+         height="6.7415285"
+         x="110.29518"
+         y="221.03259" />
+      <path
+         id="path1114"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         transform="matrix(1.4683144,0,0,1.0768303,-51.06832,38.488253)"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         inkscape:transform-center-x="2.36972"
+         inkscape:transform-center-y="0.10042681" />
+      <path
+         inkscape:transform-center-y="-0.10042425"
+         inkscape:transform-center-x="-2.3697239"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         transform="matrix(-1.4683144,0,0,-1.0768303,277.04793,410.69625)"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="path1116" />
+      <path
+         inkscape:transform-center-y="-2.5373802"
+         inkscape:transform-center-x="0.078226189"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         transform="matrix(0,1.5722067,-0.83874881,0,257.93525,48.040999)"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="path1118" />
+    </g>
+    <g
+       clip-path="url(#clipPath1098)"
+       id="g1130"
+       transform="rotate(-90,140.8727,195.66298)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         y="221.03259"
+         x="110.29518"
+         height="6.7415285"
+         width="5.531281"
+         id="rect1122"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.108186;stop-color:#000000" />
+      <path
+         inkscape:transform-center-y="0.10042681"
+         inkscape:transform-center-x="2.36972"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         transform="matrix(1.4683144,0,0,1.0768303,-51.06832,38.488253)"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="path1124" />
+      <path
+         id="path1126"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         transform="matrix(-1.4683144,0,0,-1.0768303,277.04793,410.69625)"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         inkscape:transform-center-x="-2.3697239"
+         inkscape:transform-center-y="-0.10042425" />
+      <path
+         id="path1128"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         transform="matrix(0,1.5722067,-0.83874881,0,257.93525,48.040999)"
+         d="m 109.23343,168.68567 h 1.7699 v 8.46667 h -1.7699 z"
+         inkscape:transform-center-x="0.078226189"
+         inkscape:transform-center-y="-2.5373802" />
+    </g>
+    <rect
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\1_UP.png"
+       clip-path="none"
+       transform="matrix(0,2.3662443,-1.3201373,0,466.77431,-78.05804)"
+       y="168.68567"
+       x="109.23343"
+       height="8.4666662"
+       width="1.769899"
+       id="rect1026"
+       style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+       inkscape:transform-center-x="0.09749565"
+       inkscape:transform-center-y="-6.0932551" />
+    <rect
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\1_UP.png"
+       transform="rotate(90)"
+       y="-242.85271"
+       x="184.34018"
+       height="8.4666691"
+       width="8.4666662"
+       id="rect1217"
+       style="fill:#b54646;fill-opacity:1;stroke-width:0.0980274;stop-color:#000000" />
+    <rect
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\1_RIGHT.png"
+       clip-path="none"
+       inkscape:transform-center-y="-0.09749495"
+       inkscape:transform-center-x="-6.0932535"
+       style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+       id="rect1030"
+       width="1.769899"
+       height="8.4666662"
+       x="109.23343"
+       y="168.68567"
+       transform="matrix(-2.3662443,0,0,-1.3201373,523.9737,416.78153)" />
+    <rect
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\1_RIGHT.png"
+       transform="scale(-1)"
+       style="fill:#b54646;fill-opacity:1;stroke-width:0.0980274;stop-color:#000000"
+       id="rect1221"
+       width="8.4666662"
+       height="8.4666691"
+       x="-261.57547"
+       y="-192.85992" />
+    <rect
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\1_DOWN.png"
+       clip-path="none"
+       transform="matrix(0,-2.3662443,1.3201373,0,57.211852,455.26244)"
+       y="168.68567"
+       x="109.23343"
+       height="8.4666662"
+       width="1.769899"
+       id="rect1034"
+       style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+       inkscape:transform-center-x="-0.09749535"
+       inkscape:transform-center-y="6.0932542" />
+    <rect
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\1_DOWN.png"
+       transform="rotate(-90)"
+       y="281.13345"
+       x="-192.86421"
+       height="8.4666691"
+       width="8.4666662"
+       id="rect1225"
+       style="fill:#b54646;fill-opacity:1;stroke-width:0.0980274;stop-color:#000000" />
+    <g
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\2_RIGHTDOWN.png"
+       clip-path="url(#clipPath1271)"
+       id="g1245">
+      <rect
+         inkscape:transform-center-y="-0.09749295"
+         inkscape:transform-center-x="-6.0932565"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect1167"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(-2.3662443,0,0,-1.3201373,524.6611,437.9482)" />
+      <rect
+         transform="matrix(0,-2.3662443,1.3201373,0,29.821527,476.42911)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect1169"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         inkscape:transform-center-x="-0.097492295"
+         inkscape:transform-center-y="6.0932562" />
+    </g>
+    <g
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\2_DOWNLEFT.png"
+       clip-path="url(#clipPath1275)"
+       id="g1249">
+      <rect
+         transform="matrix(0,-2.3662443,1.3201373,0,58.637324,476.42911)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect1173"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         inkscape:transform-center-x="-0.09749335"
+         inkscape:transform-center-y="6.0932562" />
+      <rect
+         inkscape:transform-center-y="0.097491981"
+         inkscape:transform-center-x="6.0932558"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect1175"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(2.3662443,0,0,1.3201373,20.156414,-18.410465)" />
+    </g>
+    <g
+       clip-path="url(#clipPath1291)"
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\3_EXDOWN.png"
+       id="g1269">
+      <rect
+         transform="matrix(2.3662443,0,0,1.3201373,-47.953643,2.132854)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect1179"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         inkscape:transform-center-x="6.0932548"
+         inkscape:transform-center-y="0.097492077" />
+      <rect
+         inkscape:transform-center-y="-6.0932551"
+         inkscape:transform-center-x="0.09749165"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect1181"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(0,2.3662443,-1.3201373,0,446.88593,-36.348054)" />
+      <rect
+         transform="matrix(-2.3662443,0,0,-1.3201373,485.36684,458.49152)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect1185"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         inkscape:transform-center-x="-6.0932575"
+         inkscape:transform-center-y="-0.09749095" />
+    </g>
+    <g
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\3_EXLEFT.png"
+       clip-path="url(#clipPath1287)"
+       id="g1264">
+      <rect
+         inkscape:transform-center-y="-6.0932551"
+         inkscape:transform-center-x="0.09748765"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect1187"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(0,2.3662443,-1.3201373,0,470.04887,-36.348054)" />
+      <rect
+         transform="matrix(-2.3662443,0,0,-1.3201373,508.52977,458.49152)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect1189"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         inkscape:transform-center-x="-6.0932515"
+         inkscape:transform-center-y="-0.097494909" />
+      <rect
+         inkscape:transform-center-y="6.0932542"
+         inkscape:transform-center-x="-0.097491377"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect1191"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(0,-2.3662443,1.3201373,0,13.6902,496.97243)" />
+    </g>
+    <g
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\3_EXUP.png"
+       clip-path="url(#clipPath1283)"
+       id="g1259">
+      <rect
+         transform="matrix(-2.3662443,0,0,-1.3201373,528.10797,458.49152)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect1195"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         inkscape:transform-center-x="-6.0932515"
+         inkscape:transform-center-y="-0.09749095" />
+      <rect
+         inkscape:transform-center-y="6.0932482"
+         inkscape:transform-center-x="-0.097495295"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect1197"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(0,-2.3662443,1.3201373,0,33.2684,496.97242)" />
+      <rect
+         transform="matrix(2.3662443,0,0,1.3201373,-5.2125104,2.1328493)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect1199"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         inkscape:transform-center-x="6.0932542"
+         inkscape:transform-center-y="0.097491377" />
+    </g>
+    <g
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\3_EXRIGHT.png"
+       clip-path="url(#clipPath1279)"
+       id="g1254">
+      <rect
+         inkscape:transform-center-y="6.0932482"
+         inkscape:transform-center-x="-0.09749135"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect1203"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(0,-2.3662443,1.3201373,0,59.8782,496.97242)" />
+      <rect
+         transform="matrix(2.3662443,0,0,1.3201373,21.3973,2.1328543)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect1205"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         inkscape:transform-center-x="6.0932478"
+         inkscape:transform-center-y="0.097495281" />
+      <rect
+         inkscape:transform-center-y="-6.0932545"
+         inkscape:transform-center-x="0.097491677"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect1207"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(0,2.3662443,-1.3201373,0,516.23687,-36.348056)" />
+    </g>
+    <g
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\2_LEFTUP.png"
+       clip-path="url(#clipPath1231)"
+       id="g1229">
+      <rect
+         inkscape:transform-center-y="0.097492077"
+         inkscape:transform-center-x="6.0932548"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect1038"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(2.3662443,0,0,1.3201373,-47.953643,-18.410464)" />
+      <rect
+         transform="matrix(0,2.3662443,-1.3201373,0,446.88593,-56.891372)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect1042"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         inkscape:transform-center-x="0.09749165"
+         inkscape:transform-center-y="-6.0932551" />
+    </g>
+    <rect
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\1_LEFT.png"
+       style="fill:#b54646;fill-opacity:1;stroke-width:0.0980273;stop-color:#000000"
+       id="rect1213"
+       width="8.4666662"
+       height="8.4666691"
+       x="214.44458"
+       y="184.34447" />
+    <g
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\1_LEFT.png"
+       clip-path="none"
+       id="g1119">
+      <rect
+         transform="matrix(2.3662443,0,0,1.3201373,-47.953643,-39.577132)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect904"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         inkscape:transform-center-x="6.0932548"
+         inkscape:transform-center-y="0.097492077" />
+    </g>
+    <g
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="C:\Users\EKREM\Unity\Dungeon Quest Turn Based RPG\Assets\Sprites\SpecialPurposeSprites\ShadowCorners2\2_UPRIGHT.png"
+       clip-path="url(#clipPath1239)"
+       id="g1237">
+      <rect
+         transform="matrix(0,2.3662443,-1.3201373,0,468.11862,-56.891372)"
+         y="168.68567"
+         x="109.23343"
+         height="8.4666662"
+         width="1.769899"
+         id="rect1161"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         inkscape:transform-center-x="0.09749265"
+         inkscape:transform-center-y="-6.0932551" />
+      <rect
+         inkscape:transform-center-y="-0.097491909"
+         inkscape:transform-center-x="-6.0932565"
+         style="fill:#fefefe;fill-opacity:1;stroke-width:0.15;filter:url(#filter891);stop-color:#000000"
+         id="rect1163"
+         width="1.769899"
+         height="8.4666662"
+         x="109.23343"
+         y="168.68567"
+         transform="matrix(-2.3662443,0,0,-1.3201373,506.59953,437.9482)" />
+    </g>
+  </g>
+</svg>

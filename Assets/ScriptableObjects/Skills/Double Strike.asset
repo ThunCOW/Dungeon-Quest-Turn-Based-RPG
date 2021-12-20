@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1010d3fc61d2579498d7a6154a106cad, type: 3}
+  m_Name: Double Strike
+  m_EditorClassIdentifier: 
+  id: 843b59b62e08d244084af00ad9d91095
+  Name: Double Strike
+  Icon: {fileID: 21300000, guid: 663dbdd22bd2209418655464e1909798, type: 3}
+  Tile: {fileID: 0}
+  MaximumStacks: 1
+  itemType: 0
+  isConsumable: 0
+  TimedStatEffects: []
+  InstantStatEffects: []
