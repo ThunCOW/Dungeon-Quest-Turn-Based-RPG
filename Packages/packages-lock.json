@@ -128,14 +128,13 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.universal": {
-      "version": "8.2.0",
+      "version": "file:C:/Users/EKREM/Unity/0_ManualPackages/com.unity.render-pipelines.universal@8.2.0",
       "depth": 0,
-      "source": "registry",
+      "source": "local",
       "dependencies": {
         "com.unity.render-pipelines.core": "8.2.0",
         "com.unity.shadergraph": "8.2.0"
-      },
-      "url": "https://packages.unity.com"
+      }
     },
     "com.unity.searcher": {
       "version": "4.0.9",
