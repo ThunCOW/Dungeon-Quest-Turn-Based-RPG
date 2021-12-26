@@ -17,8 +17,11 @@ public class PlayerMovement : CharacterMovement
 
     public override void MovementAction(float movementPoint)
     {
+#if (UNITY_ANDROID)
+        MobileInputs();
+#else
         MouseInputs((int)movementPoint);
-        //MobileInputs();
+#endif
         if(Input.GetKeyDown(KeyCode.Space))
             UnityEngine.Debug.Break();
     }
