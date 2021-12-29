@@ -19,7 +19,8 @@ public class PlayerMovement : CharacterMovement
     {
 #if (UNITY_ANDROID)
         MobileInputs();
-#else
+#endif
+#if (UNITY_EDITOR)
         MouseInputs((int)movementPoint);
 #endif
         if(Input.GetKeyDown(KeyCode.Space))

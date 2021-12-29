@@ -7,8 +7,8 @@ using UnityEngine.Experimental.Rendering;
 
 public class SpriteMaterialSwapper : MonoBehaviour
 {
-    [SerializeField] Material spriteDefault;
-    [SerializeField] Material spriteShader;
+    [SerializeField] Material spriteDefault = null;
+    [SerializeField] Material spriteShader = null;
 
     public bool swapToDefault = false;
     public bool swapToShader = false;
