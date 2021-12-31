@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#if (UNITY_EDITOR)
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.EditorCoroutines.Editor;
@@ -34,7 +36,6 @@ public class GetObjectsAll : MonoBehaviour
     private void Update() 
     {
 
-#if (UNITY_EDITOR)
         /*if(disableAllObjects)
         {
             int i = 0;
@@ -138,7 +139,6 @@ public class GetObjectsAll : MonoBehaviour
                 }
             }
         }*/
-#endif
 
     }
 
@@ -151,3 +151,4 @@ public class GetObjectsAll : MonoBehaviour
         DestroyImmediate(circleCol);
     }*/
 }
+#endif

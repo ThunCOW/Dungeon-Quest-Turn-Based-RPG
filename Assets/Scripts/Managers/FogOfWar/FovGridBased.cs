@@ -50,6 +50,7 @@ namespace TileFOV
         private int viewDistanceCurrent;
         public void Refresh(Vinteger pos)
         {
+            // if character sight changed, destroy old fov tiles and create new ones
             if(viewDistanceCurrent != viewDistance)
             {
                 foreach(Transform child in fovTiles_Parent.transform)
@@ -102,13 +103,14 @@ namespace TileFOV
 
                         if(td != null)
                         {
+                            Vector2Int fov_tilePosition = new Vector2Int((pos.x - start.x), (pos.y - start.y));
+                            Color color = Color.blue;
+                            
                             if((td.tileType == TileType.unwalkable && !td.walkable) || (td.tileType == TileType.door && !td.doorOpen))
                             {
                                 isWall = true;
                             }
 
-                            Vector2Int fov_tilePosition = new Vector2Int((pos.x - start.x), (pos.y - start.y));
-                            Color color = Color.blue;
                             if(!visible)
                             {
                                 color = Color.red;
@@ -119,13 +121,37 @@ namespace TileFOV
                                     fovTile.GetComponent<BoxDetector>().DisableBox();
                                 }
                             }
-                            else
+                            else if(visible)
                             {
+                                //if(!isWall)
+                                //{
                                 GameObject fovTile = nodes[fov_tilePosition.x + viewDistance, fov_tilePosition.y + viewDistance];
-                                if(!fovTile.activeSelf)
+                                    if(!fovTile.activeSelf)
+                                    {
+                                        fovTile.SetActive(true);
+                                    }
+                                /*}
+                                else
                                 {
-                                    fovTile.SetActive(true);
-                                }
+                                    color = Color.red;
+
+                                    if(fovTile.activeSelf)
+                                    {
+                                        fovTile.GetComponent<BoxDetector>().DisableBox();
+                                    }
+                                }*/
+
+                                /*if(gameObject.CompareTag("Player"))
+                                {
+                                    Debug.Log(fovTile.transform.position);
+                                    // Clear fog tile
+                                    FogOfWarTilemapManager fogOfWarTilemapManager = FindObjectOfType<FogOfWarTilemapManager>().GetComponent<FogOfWarTilemapManager>();
+
+                                    if(fogOfWarTilemapManager != null)
+                                    {
+                                        fogOfWarTilemapManager.ClearFog(fovTile.transform.position, transform.position);
+                                    }
+                                }*/
                             }
 
                             //Vector3Int tilePos = new Vector3Int(pos.x, pos.y, 0);
@@ -133,6 +159,16 @@ namespace TileFOV
                         }
                         else
                         {
+                            Vector2Int fov_tilePosition = new Vector2Int((pos.x - start.x), (pos.y - start.y));
+
+                            Color color = Color.red;
+                                
+                            GameObject fovTile = nodes[fov_tilePosition.x + viewDistance, fov_tilePosition.y + viewDistance];
+                            if(fovTile.activeSelf)
+                            {
+                                fovTile.GetComponent<BoxDetector>().DisableBox();
+                            }
+
                             isWall = true;
                         }
 

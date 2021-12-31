@@ -17,7 +17,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MainMap.unity
     guid: dc906ec9cf822f14fbe17061614b2afb
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Dungeon1Light.unity
     guid: 67621a731424ae04293ee8af215b0621
+  - enabled: 1
+    path: Assets/Scenes/Dungeon1Light_Test2.unity
+    guid: 97d8a8332108c29409295b6921681999
   m_configObjects: {}
