@@ -1,22 +1,29 @@
-﻿#if (UNITY_EDITOR)
-
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if (UNITY_EDITOR)
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
+#endif
 
 
 [ExecuteInEditMode]
 public class GetObjectsAll : MonoBehaviour
 {
     public bool Trigger = false;
+
+    public bool changeNames = false;
     
     [Space]
     public bool disableAllObjects = false;
 
     [Space]
     public ContactFilter2D contactFilter2D;
+
+    [Space]
+    public ContactFilter2D contactFilterForFOV;
 
     [Space]
     [SerializeField] GameObject roomParent = null;
@@ -35,7 +42,16 @@ public class GetObjectsAll : MonoBehaviour
 
     private void Update() 
     {
-
+        if(changeNames)
+        {
+            changeNames = false;
+            int i = 0;
+            foreach(RenderWhenVisible room in roomParent.GetComponentsInChildren<RenderWhenVisible>())
+            {
+                room.gameObject.name = "Room_" + i.ToString();
+                i++;
+            }
+        }
         /*if(disableAllObjects)
         {
             int i = 0;
@@ -59,7 +75,7 @@ public class GetObjectsAll : MonoBehaviour
             }
         }*/
         
-        if(Trigger)
+        /*if(Trigger)
         {
             Trigger = false;
             
@@ -100,7 +116,7 @@ public class GetObjectsAll : MonoBehaviour
                     }
                 }
             }
-        }
+        }*/
         /*if(Trigger)
         {
             Trigger = false;
@@ -151,4 +167,3 @@ public class GetObjectsAll : MonoBehaviour
         DestroyImmediate(circleCol);
     }*/
 }
-#endif

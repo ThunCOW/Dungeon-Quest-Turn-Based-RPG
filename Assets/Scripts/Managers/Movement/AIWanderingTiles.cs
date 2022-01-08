@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 
+using UnityEngine.Tilemaps;
 using UnityEngine;
 using UnityEditor;
 using System.Text;
@@ -8,7 +9,7 @@ using UnityEditor.EditorTools;
 
 public class AIWanderingTiles : EditorWindow
 {
-    [MenuItem ("Window/My Window")]
+    [MenuItem ("Window/Grid Actions")]
     public static void  ShowWindow () 
     {
         EditorWindow.GetWindow(typeof(AIWanderingTiles));
@@ -145,13 +146,21 @@ public class AIWanderingTiles : EditorWindow
 
             PathPainter();
 
+            
             if(enableGridMode)
             {
-                StaticClass.gridManager.canDrawGizmo = true;
+                if(GridManager.gridManager != null)
+                {
+                    GridManager.gridManager.canDrawGizmo = true;
+                }else
+                    Debug.LogError("Game is not being played");
             }
             else
             {
-                StaticClass.gridManager.canDrawGizmo = false;
+                if(GridManager.gridManager != null)
+                {
+                    GridManager.gridManager.canDrawGizmo = false;
+                }
             }
         
             Handles.EndGUI();
@@ -199,9 +208,10 @@ public class AIWanderingTiles : EditorWindow
                     Ray ray = SceneView.lastActiveSceneView.camera.ScreenPointToRay(mousePosition);
                     mousePosition = ray.origin;
 
-                    if(StaticClass.gridBase != null)
+                    if(GridManager.gridBase != null)
                     {
-                        Vector3Int mousePosInt = StaticClass.gridBase.WorldToCell(mousePosition);
+                        Vector3Int mousePosInt = GridManager.gridBase.WorldToCell(mousePosition);
+                        mousePosInt.z = 0;
                         if(!aiMovement.wanderingTiles.Contains(mousePosInt))
                         {
                             aiMovement.wanderingTiles.Add(mousePosInt);
@@ -230,13 +240,14 @@ public class AIWanderingTiles : EditorWindow
                         mousePosition.y = SceneView.lastActiveSceneView.camera.pixelHeight - mousePosition.y;
                         Ray ray = SceneView.lastActiveSceneView.camera.ScreenPointToRay(mousePosition);
                         mousePosition = ray.origin;
-                        Vector3Int mousePosInt = StaticClass.gridBase.WorldToCell(mousePosition);
+                        Vector3Int mousePosInt = GridManager.gridBase.WorldToCell(mousePosition);
+                        mousePosInt.z = 0;
 
                         if(lastMousePos != mousePosInt)
                         {
                             lastMousePos = mousePosInt;
 
-                            if(StaticClass.gridBase != null)
+                            if(GridManager.gridBase != null)
                             {
                                 if(aiMovement.wanderingTiles.Contains(mousePosInt))
                                 {
@@ -258,13 +269,15 @@ public class AIWanderingTiles : EditorWindow
                         mousePosition.y = SceneView.lastActiveSceneView.camera.pixelHeight - mousePosition.y;
                         Ray ray = SceneView.lastActiveSceneView.camera.ScreenPointToRay(mousePosition);
                         mousePosition = ray.origin;
-                        Vector3Int mousePosInt = StaticClass.gridBase.WorldToCell(mousePosition);
+                        Grid tempGrid = new Grid();
+                        Vector3Int mousePosInt = GridManager.gridBase.WorldToCell(mousePosition);
+                        mousePosInt.z = 0;
 
                         if(lastMousePos != mousePosInt)
                         {
                             lastMousePos = mousePosInt;
 
-                            if(StaticClass.gridBase != null)
+                            if(GridManager.gridBase != null)
                             {
                                 if(!aiMovement.wanderingTiles.Contains(mousePosInt))
                                 {
@@ -301,7 +314,8 @@ public class AIWanderingTiles : EditorWindow
         }
         allSelectedUntilNow.Clear();
 
-        StaticClass.gridManager.canDrawGizmo = false;
+        if(GridManager.gridManager != null)
+            GridManager.gridManager.canDrawGizmo = false;
 
         SceneView.duringSceneGui -= this.OnSceneGUI;
     }

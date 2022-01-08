@@ -16,7 +16,7 @@ public class GridManagerWithGameObjects : MonoBehaviour
     private void Awake()
     {
         //StaticClass.gridManager = this;
-        StaticClass.gridBase = gameObject.GetComponent<Grid>();
+        GridManager.gridBase = gameObject.GetComponent<Grid>();
     }
 
     void Start ()
@@ -90,7 +90,7 @@ public class GridManagerWithGameObjects : MonoBehaviour
                             //Debug.Log("new node" + localPos);
                             GameObject node = (GameObject)Instantiate(nodePrefab, worldPos, Quaternion.Euler(0, 0, 0));
                             TileData td = node.GetComponent<TileData>();
-                            td.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, true, TileType.walkable);
+                            td.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, true, TileType.walkable, tempTileMap);
                             node.transform.parent = gridNode.transform;
                             nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])] = node;
                             StaticClass.tileCount++;
@@ -104,7 +104,7 @@ public class GridManagerWithGameObjects : MonoBehaviour
                             //Debug.Log("new node" + localPos);
                             GameObject node = (GameObject)Instantiate(nodePrefab, worldPos, Quaternion.Euler(0, 0, 0));
                             TileData td = node.GetComponent<TileData>();
-                            td.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, false, TileType.unwalkable);
+                            td.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, false, TileType.unwalkable, tempTileMap);
                             node.transform.parent = gridNode.transform;
                             nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])] = node;
                             StaticClass.tileCount++;
@@ -117,7 +117,7 @@ public class GridManagerWithGameObjects : MonoBehaviour
                             //Debug.Log("new node" + localPos);
                             GameObject node = (GameObject)Instantiate(nodePrefab, worldPos, Quaternion.Euler(0, 0, 0));
                             TileData td = node.GetComponent<TileData>();
-                            td.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, true, TileType.door);
+                            td.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, true, TileType.door, tempTileMap);
                             node.transform.parent = gridNode.transform;
                             nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])] = node;
                             StaticClass.tileCount++;
@@ -177,7 +177,7 @@ public class GridManagerWithGameObjects : MonoBehaviour
 
     public TileData GetTileDataByLocalPosition(Vector3 worldPosition)
     {
-        Vector3Int localPos = StaticClass.gridBase.WorldToCell(worldPosition); // grid component can be used instead of this
+        Vector3Int localPos = GridManager.gridBase.WorldToCell(worldPosition); // grid component can be used instead of this
         
         TileData tempTileData = null;
         try{
@@ -194,7 +194,7 @@ public class GridManagerWithGameObjects : MonoBehaviour
 
     public void UnBlockTile(Vector3 tilePos)
     {
-        Vector3Int localPos = StaticClass.gridBase.WorldToCell(tilePos); // grid component can be used instead of this
+        Vector3Int localPos = GridManager.gridBase.WorldToCell(tilePos); // grid component can be used instead of this
 
         GameObject tile = nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])];
 
@@ -206,7 +206,7 @@ public class GridManagerWithGameObjects : MonoBehaviour
     
     public void BlockTile(Vector3 tilePos)
     {
-        Vector3Int localPos = StaticClass.gridBase.WorldToCell(tilePos); // grid component can be used instead of this
+        Vector3Int localPos = GridManager.gridBase.WorldToCell(tilePos); // grid component can be used instead of this
 
         GameObject tile = nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])];
 

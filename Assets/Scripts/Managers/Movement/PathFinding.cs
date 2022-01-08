@@ -10,8 +10,8 @@ public class PathFinding
         //Stopwatch sw = new Stopwatch();
         //sw.Start();
 
-        TileData startNode = StaticClass.gridManager.GetTileDataByLocalPosition(startPosition);
-        TileData targetNode = StaticClass.gridManager.GetTileDataByLocalPosition(endPosition);
+        TileData startNode = GridManager.gridManager.GetTileDataByLocalPosition(startPosition);
+        TileData targetNode = GridManager.gridManager.GetTileDataByLocalPosition(endPosition);
         if(targetNode == null)
             return;
 

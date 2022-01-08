@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using UnityEngine.Rendering;
 using UnityEngine;
 using TileFOV;
 
 public abstract class CharacterMovement : MonoBehaviour
 {
+    protected SortingGroup sortingGroup;
     protected Vector3 oldPos, newPos;   // sending it to GridManager to block the new tile we are standing on, and unblocking the old tile 
     
     protected List<Vector3> walkableTilesPositions = null; // right click
@@ -17,7 +19,6 @@ public abstract class CharacterMovement : MonoBehaviour
 
     [SerializeField] protected List<TileData> path = new List<TileData>();
     
-    protected GridManager gridManager;
     protected FovGridBased fov;
 
     protected FogOfWarTilemapManager fogOfWarTilemapManager;
@@ -26,18 +27,23 @@ public abstract class CharacterMovement : MonoBehaviour
         if(fogOfWarTilemapManager == null)
             fogOfWarTilemapManager = FindObjectOfType<FogOfWarTilemapManager>();
     }
+
+    protected virtual void Awake()
+    {
+        
+    }
     
     // Start is called before the first frame update
     protected virtual void Start()
     {
         // Get References
         fogOfWarTilemapManager = FindObjectOfType<FogOfWarTilemapManager>();
+        sortingGroup = GetComponent<SortingGroup>();
         //CalculateWalkableTiles();
         pathFinding = new PathFinding();
-        gridManager = StaticClass.gridManager;
 
         fov = GetComponent<FovGridBased>();
-        Vector3Int localPos = StaticClass.gridBase.WorldToCell(transform.position);
+        Vector3Int localPos = GridManager.gridBase.WorldToCell(transform.position);
         Vinteger v = new Vinteger(localPos.x, localPos.y);
         fov.Refresh(v);
 
@@ -47,7 +53,7 @@ public abstract class CharacterMovement : MonoBehaviour
         newPos = transform.position;
 
         //updates
-        gridManager.BlockTile(transform.position);
+        GridManager.gridManager.BlockTile(transform.position);
     }
 
     
@@ -93,7 +99,7 @@ public abstract class CharacterMovement : MonoBehaviour
                 }
                 if(path[0].doorLocked == false && path[0].doorOpen == false)    // if door is NOT open and NOT locked
                 {
-                    path[0].tilemap.SetTile(new Vector3Int(path[0].gridX, path[0].gridY, 0), StaticClass.gridManager.door);
+                    path[0].tilemap.SetTile(new Vector3Int(path[0].gridX, path[0].gridY, 0), GridManager.gridManager.door);
                     path[0].doorOpen = true;
                 }
                 else    // if door IS open
@@ -106,8 +112,8 @@ public abstract class CharacterMovement : MonoBehaviour
                     //transform.position = newPos;
 
                     // increase turn after our 1 turn of action is over
-                    gridManager.UnBlockTile(oldPos);
-                    gridManager.BlockTile(newPos);
+                    GridManager.gridManager.UnBlockTile(oldPos);
+                    GridManager.gridManager.BlockTile(newPos);
                     oldPos = newPos;
                     StaticClass.gameTurn++;
                 }
@@ -122,10 +128,13 @@ public abstract class CharacterMovement : MonoBehaviour
                 //transform.position = newPos;
 
                 // increase turn after our 1 turn of action is over
-                gridManager.UnBlockTile(oldPos);
-                gridManager.BlockTile(newPos);
+                GridManager.gridManager.UnBlockTile(oldPos);
+                GridManager.gridManager.BlockTile(newPos);
                 oldPos = newPos;
                 StaticClass.gameTurn++;
+
+                TileData td = GridManager.gridManager.GetTileDataByLocalPosition(targetPos);
+                sortingGroup.sortingOrder = td.characterSortingOrder;
             }
         }
     }

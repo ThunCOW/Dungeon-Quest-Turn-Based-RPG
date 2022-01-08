@@ -9,6 +9,7 @@ TagManager:
   - Grid
   - Door
   - AI Hostile 1
+  - SeeThrough
   layers:
   - Default
   - TransparentFX
@@ -22,8 +23,8 @@ TagManager:
   - FogOfWarSecondary
   - Characters
   - Obstacles
-  - DumbLayer
-  - 
+  - Room
+  - Camera
   - 
   - 
   - 

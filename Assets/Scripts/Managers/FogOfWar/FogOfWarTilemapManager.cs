@@ -47,7 +47,7 @@ public class FogOfWarTilemapManager : MonoBehaviour
         {
             for (int y = bounds[StaticClass.yMin]; y < bounds[StaticClass.yMax]; y++)
             {
-                Vector3Int localPos = (new Vector3Int(x, y, (int)StaticClass.gridBase.transform.position.z));    // local positions of tiles
+                Vector3Int localPos = (new Vector3Int(x, y, (int)GridManager.gridBase.transform.position.z));    // local positions of tiles
                 
                 foreach (Tilemap tileMap in allTileMaps)   // circle through tilemaps in our scene
                 {

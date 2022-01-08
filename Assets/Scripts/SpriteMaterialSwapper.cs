@@ -21,7 +21,8 @@ public class SpriteMaterialSwapper : MonoBehaviour
             swapToDefault = false;
             if(spriteDefault != null)
             {
-                GameObject[] _rootGameObjectsOfSpecificScene = SceneManager.GetSceneByName("Dungeon1Light").GetRootGameObjects();
+                //GameObject[] _rootGameObjectsOfSpecificScene = SceneManager.GetSceneByName("Dungeon1Light_Test2").GetRootGameObjects();
+                GameObject[] _rootGameObjectsOfSpecificScene = SceneManager.GetActiveScene().GetRootGameObjects();
                 foreach(GameObject go in _rootGameObjectsOfSpecificScene)
                 {
                     foreach(SpriteRenderer sr in go.GetComponentsInChildren<SpriteRenderer>(true))
@@ -48,7 +49,7 @@ public class SpriteMaterialSwapper : MonoBehaviour
             swapToShader = false;
             if(spriteShader != null)
             {
-                GameObject[] _rootGameObjectsOfSpecificScene = SceneManager.GetSceneByName("Dungeon1Light").GetRootGameObjects();
+                GameObject[] _rootGameObjectsOfSpecificScene = SceneManager.GetActiveScene().GetRootGameObjects();
                 foreach(GameObject go in _rootGameObjectsOfSpecificScene)
                 {
                     foreach(SpriteRenderer sr in go.GetComponentsInChildren<SpriteRenderer>(true))

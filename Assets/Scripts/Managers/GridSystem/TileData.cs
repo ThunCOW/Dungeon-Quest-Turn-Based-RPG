@@ -2,6 +2,13 @@
 using UnityEngine.Tilemaps;
 using System;
 
+public enum TileType{
+    walkable,
+    unwalkable,
+    seeThrough,
+    door,
+}
+
 [System.Serializable]
 public class TileData : IHeapItem<TileData>
 {
@@ -30,6 +37,7 @@ public class TileData : IHeapItem<TileData>
 
     public Tilemap tilemap;
     [NonSerialized] public TileData[] closestWalkable = new TileData[4]; // hold closest walkable tile if you are not walkable yourself
+    public int characterSortingOrder = 10;
     
     public int fCost
     {
@@ -39,13 +47,14 @@ public class TileData : IHeapItem<TileData>
         }
     }
 
-    public void Init(int gridX, int gridY, float worldX, float worldY, bool walkable, TileType tileType) {
+    public void Init(int gridX, int gridY, float worldX, float worldY, bool walkable, TileType tileType, Tilemap tilemap) {
         this.gridX = gridX;
         this.gridY = gridY;
         this.worldX = worldX;
         this.worldY = worldY;
         this.walkable = walkable;
         this.tileType = tileType;
+        this.tilemap = tilemap;
         this.name = gridX + ", " + gridY;
     }
 
