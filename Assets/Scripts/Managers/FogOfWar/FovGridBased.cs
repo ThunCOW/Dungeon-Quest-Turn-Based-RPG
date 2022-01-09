@@ -266,7 +266,7 @@ namespace TileFOV
             bool retVal = true;
 
             // Checks if position is within grid bounds
-            if(x < GridManager.gridManager.bounds[StaticClass.xMin] || y < GridManager.gridManager.bounds[StaticClass.yMin] || x > GridManager.gridManager.bounds[StaticClass.xMax] - 1 || y > GridManager.gridManager.bounds[StaticClass.yMax] - 1)
+            if(x < GridManager.bounds[StaticClass.xMin] || y < GridManager.bounds[StaticClass.yMin] || x > GridManager.bounds[StaticClass.xMax] - 1 || y > GridManager.bounds[StaticClass.yMax] - 1)
                 retVal = false;
 
             if(retVal)

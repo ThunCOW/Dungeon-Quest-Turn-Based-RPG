@@ -17,6 +17,8 @@ public class GridManager : MonoBehaviour
     public static Grid gridBase;
     public static GridManager gridManager;
 
+    [Space]
+    public bool FixBounds = false;
     private void OnValidate()
     {
         if(gridBase == null)
@@ -24,16 +26,62 @@ public class GridManager : MonoBehaviour
 
         if(gridManager == null)
             gridManager = this;
+
+        /* 
+            Functions with triggers
+        */
+
+        if(FixBounds)
+        {
+            FixBounds = false;
+            foreach(Tilemap tilemap in allTilemaps)
+            {
+                tilemap.CompressBounds();
+            }
+        }
+
+        if(createMapData)
+        {
+            createMapData = false;
+            foreach(Tilemap tilemap in allTilemaps)
+            {
+                // here we circle through tilemaps to find xMin xMax yMin yMax
+                if(tilemap.cellBounds.xMin < bounds[StaticClass.xMin])
+                    bounds[StaticClass.xMin] = tilemap.cellBounds.xMin;
+                if(tilemap.cellBounds.xMax > bounds[StaticClass.xMax])
+                    bounds[StaticClass.xMax] = tilemap.cellBounds.xMax;
+                if(tilemap.cellBounds.yMin < bounds[StaticClass.yMin])
+                    bounds[StaticClass.yMin] = tilemap.cellBounds.yMin;
+                if(tilemap.cellBounds.yMax > bounds[StaticClass.yMax])
+                    bounds[StaticClass.yMax] = tilemap.cellBounds.yMax;
+            }
+            CreateGrid();
+        }
     }
     
-    private void Awake() 
+    [Space]
+    public bool createMapData = false;
+
+    private void Awake()
     {
-        
+        foreach(Tilemap tilemap in allTilemaps)
+        {
+            // here we circle through tilemaps to find xMin xMax yMin yMax
+            if(tilemap.cellBounds.xMin < bounds[StaticClass.xMin])
+                bounds[StaticClass.xMin] = tilemap.cellBounds.xMin;
+            if(tilemap.cellBounds.xMax > bounds[StaticClass.xMax])
+                bounds[StaticClass.xMax] = tilemap.cellBounds.xMax;
+            if(tilemap.cellBounds.yMin < bounds[StaticClass.yMin])
+                bounds[StaticClass.yMin] = tilemap.cellBounds.yMin;
+            if(tilemap.cellBounds.yMax > bounds[StaticClass.yMax])
+                bounds[StaticClass.yMax] = tilemap.cellBounds.yMax;
+        }
+        CreateGrid();
     }
 
     void Start () 
     {
-        CreateGrid();
+        //CreateGrid();
     }
 
     /*private void Update() {
@@ -45,21 +93,9 @@ public class GridManager : MonoBehaviour
         }
     }*/
 
-    public int[] bounds = new int[7];
+    public static int[] bounds = new int[7];
     void CreateGrid()
     {
-        foreach(Tilemap tilemap in allTilemaps)
-        {   // here we circle through tilemaps to find xMin xMax yMin yMax 
-            if(tilemap.cellBounds.xMin < bounds[StaticClass.xMin])
-                bounds[StaticClass.xMin] = tilemap.cellBounds.xMin;
-            if(tilemap.cellBounds.xMax > bounds[StaticClass.xMax])
-                bounds[StaticClass.xMax] = tilemap.cellBounds.xMax;
-            if(tilemap.cellBounds.yMin < bounds[StaticClass.yMin])
-                bounds[StaticClass.yMin] = tilemap.cellBounds.yMin;
-            if(tilemap.cellBounds.yMax > bounds[StaticClass.yMax])
-                bounds[StaticClass.yMax] = tilemap.cellBounds.yMax;
-        }
-
         // create nodes array as big as our map size we calculated above
         nodes = new TileData[Mathf.Abs(bounds[StaticClass.xMin]) + Mathf.Abs(bounds[StaticClass.xMax]) + 1, Mathf.Abs(bounds[StaticClass.yMin]) + Mathf.Abs(bounds[StaticClass.yMax]) + 1];
 
@@ -157,12 +193,11 @@ public class GridManager : MonoBehaviour
                     if(currentTileData.walkable == false)
                     {
 
-                        /* direction 
-                            0 = south   / -y
-                            1 = west    / -x
-                            2 = north   / y
-                            3 = east    / x
-                        */
+                        // direction 
+                        //  0 = south   / -y
+                        //  1 = west    / -x
+                        //  2 = north   / y
+                        //  3 = east    / x
                         for(int direction = 0; direction < 4; direction++)
                         {
                             int increasePoint = 1;
