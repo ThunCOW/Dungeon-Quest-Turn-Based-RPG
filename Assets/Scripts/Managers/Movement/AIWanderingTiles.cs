@@ -16,10 +16,12 @@ public class AIWanderingTiles : EditorWindow
     }
 
     AIMovement aiMovement;
+    SerializedProperty aiPatrolTiles;
     
     protected static readonly StringBuilder sb = new StringBuilder();
     private bool enablePathMode;
     private bool enableGridMode;
+    private bool enableEditorTileEffectMode;
     private void OnGUI()
     {
         //Start Label
@@ -48,21 +50,21 @@ public class AIWanderingTiles : EditorWindow
         enablePathMode = GUILayout.Toggle(enablePathMode, "Path", buttonStyle, GUILayout.Width(iButtonWidth));
         
         enableGridMode = GUILayout.Toggle(enableGridMode, "Grid", buttonStyle, GUILayout.Width(iButtonWidth));
-        
+
         GUILayout.EndHorizontal();
         // Toggle Button End
 
         if(aiMovement != null)
         {
             EditorGUILayout.ObjectField(aiMovement.gameObject, typeof(GameObject), true);
-
+            //EditorGUILayout.IntField(aiMovement.wanderingTiles.cou)
             /*SerializedObject so = new SerializedObject(aiMovement);
             SerializedProperty stringsProperty = so.FindProperty("wanderingTiles");
     
             EditorGUILayout.PropertyField(stringsProperty, new GUIContent("Wandering Positions"), true);
             so.ApplyModifiedProperties();*/
 
-            List<Vector3> wanderingTiles = aiMovement.wanderingTiles;
+            /*List<Vector3> wanderingTiles = aiMovement.wanderingTiles;
             int newCount = Mathf.Max(0, EditorGUILayout.DelayedIntField("size", wanderingTiles.Count));
             while (newCount < wanderingTiles.Count)
                 wanderingTiles.RemoveAt( wanderingTiles.Count - 1 );
@@ -72,7 +74,7 @@ public class AIWanderingTiles : EditorWindow
             for(int i = 0; i < wanderingTiles.Count; i++)
             {
                 EditorGUILayout.LabelField(wanderingTiles[i].ToString());
-            }
+            }*/
         }
         else
         {
@@ -103,10 +105,10 @@ public class AIWanderingTiles : EditorWindow
         {
             Handles.BeginGUI();
 
-            // If Toggled
+            // If Toggled, change mouse mode
             if(enablePathMode)
             {
-                Tools.current = Tool.Rect;
+                Tools.current = Tool.None;
 
                 // Disables tool to be able to select game object in Scene
                 HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
@@ -163,6 +165,8 @@ public class AIWanderingTiles : EditorWindow
                 }
             }
         
+
+            
             Handles.EndGUI();
             SceneView.lastActiveSceneView.Repaint();
         }
@@ -172,8 +176,7 @@ public class AIWanderingTiles : EditorWindow
     bool isRemoving;        // when mouse button is hold, if clicked on existing position we are removing tiles, if not we are adding
     void PathPainter()
     {
-        //if(Tools.current == Tool.Custom) // if right tool is selected
-        if(enablePathMode) // if right tool is selected
+        if(enablePathMode)
         {
             // Right click to select character
             if(Event.current.type == EventType.MouseDown && Event.current.button == 1)
@@ -183,6 +186,7 @@ public class AIWanderingTiles : EditorWindow
                 Ray ray = SceneView.lastActiveSceneView.camera.ScreenPointToRay(mousePosition);
                 mousePosition = ray.origin;
 
+                // If it is Character object
                 LayerMask mask = LayerMask.NameToLayer("Characters"); if((int)mask == -1) Debug.LogError("Incorrect Mask !");
                 RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, 1 << mask);
                 if(hit.collider != null)
@@ -197,10 +201,17 @@ public class AIWanderingTiles : EditorWindow
                     this.Repaint(); // Update window (runs onGUI method)
                 }
             }
-
+        }
+        
+        //if(Tools.current == Tool.Custom) // if right tool is selected
+        if(enablePathMode) // if right tool is selected
+        {
             // if character is selected above, proceed in if statemenbt and select what action we are going to do next
             if(aiMovement != null)
             {
+                SerializedObject so = new SerializedObject(aiMovement);
+
+                // Singular mouse click
                 if(Event.current.type == EventType.MouseDown && Event.current.button == 0)
                 {
                     Vector3 mousePosition = Event.current.mousePosition;
@@ -214,7 +225,16 @@ public class AIWanderingTiles : EditorWindow
                         mousePosInt.z = 0;
                         if(!aiMovement.wanderingTiles.Contains(mousePosInt))
                         {
-                            aiMovement.wanderingTiles.Add(mousePosInt);
+                            //aiMovement.wanderingTiles.Add(mousePosInt);
+                            aiPatrolTiles = so.FindProperty("wanderingTiles");
+                            if(aiPatrolTiles.arraySize > 0)
+                                aiPatrolTiles.InsertArrayElementAtIndex(aiPatrolTiles.arraySize - 1);
+                            else
+                                aiPatrolTiles.InsertArrayElementAtIndex(0);
+                            SerializedProperty sp = aiPatrolTiles.GetArrayElementAtIndex(aiPatrolTiles.arraySize - 1);
+                            sp.vector3Value = mousePosInt;
+
+                            so.ApplyModifiedProperties();
                             this.Repaint(); // Update window (runs onGUI method)
 
                             // Clicked on a position that does not exist in our list
@@ -222,7 +242,12 @@ public class AIWanderingTiles : EditorWindow
                         }
                         else
                         {
-                            aiMovement.wanderingTiles.Remove(mousePosInt);
+                            //aiMovement.wanderingTiles.Remove(mousePosInt);
+                            aiPatrolTiles = so.FindProperty("wanderingTiles");
+                            int index = aiMovement.wanderingTiles.IndexOf(mousePosInt);
+                            aiPatrolTiles.DeleteArrayElementAtIndex(index);
+                            
+                            so.ApplyModifiedProperties();
                             this.Repaint(); // Update window (runs onGUI method)
 
                             // We clicked on a pos that already exists
@@ -231,8 +256,8 @@ public class AIWanderingTiles : EditorWindow
                     }
                 }
 
-                // While we are holding mouse button down
-                if(isRemoving)
+                // While we are holding/dragging mouse button down
+                if(isRemoving)  // Removing tiles
                 {
                     if(Event.current.type == EventType.MouseDrag && Event.current.button == 0)
                     {
@@ -251,8 +276,12 @@ public class AIWanderingTiles : EditorWindow
                             {
                                 if(aiMovement.wanderingTiles.Contains(mousePosInt))
                                 {
-                                    aiMovement.wanderingTiles.Remove(mousePosInt);
-
+                                    //aiMovement.wanderingTiles.Remove(mousePosInt);
+                                    aiPatrolTiles = so.FindProperty("wanderingTiles");
+                                    int index = aiMovement.wanderingTiles.IndexOf(mousePosInt);
+                                    aiPatrolTiles.DeleteArrayElementAtIndex(index);
+                                    
+                                    so.ApplyModifiedProperties();
                                     this.Repaint(); // Update window (runs onGUI method)
                                 }
                             }
@@ -261,7 +290,7 @@ public class AIWanderingTiles : EditorWindow
                         }
                     }
                 }
-                else
+                else        // Adding tiles
                 {
                     if(Event.current.type == EventType.MouseDrag && Event.current.button == 0)
                     {
@@ -281,8 +310,13 @@ public class AIWanderingTiles : EditorWindow
                             {
                                 if(!aiMovement.wanderingTiles.Contains(mousePosInt))
                                 {
-                                    aiMovement.wanderingTiles.Add(mousePosInt);
-
+                                    //aiMovement.wanderingTiles.Add(mousePosInt);
+                                    aiPatrolTiles = so.FindProperty("wanderingTiles");
+                                    aiPatrolTiles.InsertArrayElementAtIndex(aiPatrolTiles.arraySize - 1);
+                                    SerializedProperty sp = aiPatrolTiles.GetArrayElementAtIndex(aiPatrolTiles.arraySize - 1);
+                                    sp.vector3Value = mousePosInt;
+                                    
+                                    so.ApplyModifiedProperties();
                                     this.Repaint(); // Update window (runs onGUI method)
                                 }
                             }

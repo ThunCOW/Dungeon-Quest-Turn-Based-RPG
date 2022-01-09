@@ -120,6 +120,10 @@ public abstract class CharacterMovement : MonoBehaviour
             }
             else
             {
+                //TileData td = GridManager.gridManager.GetTileDataByLocalPosition(oldPos);
+                //sortingGroup.sortingOrder = td.characterSortingOrder;
+
+
                 newPos = targetPos;
                 path.RemoveAt(0);
                 
@@ -132,9 +136,6 @@ public abstract class CharacterMovement : MonoBehaviour
                 GridManager.gridManager.BlockTile(newPos);
                 oldPos = newPos;
                 StaticClass.gameTurn++;
-
-                TileData td = GridManager.gridManager.GetTileDataByLocalPosition(targetPos);
-                sortingGroup.sortingOrder = td.characterSortingOrder;
             }
         }
     }
@@ -143,6 +144,11 @@ public abstract class CharacterMovement : MonoBehaviour
     {
         path.Clear();
     }
+
+    /// <summary>
+    /// A bool to check if player has taken half of the way from one tile to another
+    /// </summary>
+    private bool halfTimePassed = false;
 
     protected void LerpToPos(Vector3 startPos, Vector3Int targetPos)
     {
@@ -173,8 +179,16 @@ public abstract class CharacterMovement : MonoBehaviour
         }
 
         t += Time.deltaTime * speedActual;
+        if(t >= 0.5f && !halfTimePassed)   // half the time passed
+        {
+            halfTimePassed = true;
+            TileData td = GridManager.gridManager.GetTileDataByLocalPosition(targetPos);
+            sortingGroup.sortingOrder = td.characterSortingOrder;
+        }
         if(t >= 1)
         {
+            halfTimePassed = false;
+
             t = 1;
             isLerping = false;
             initLerp = false;

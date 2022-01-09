@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.Tilemaps;
+using UnityEngine;
 using System;
 
 public enum TileType{
@@ -21,6 +22,7 @@ public class TileData : IHeapItem<TileData>
     //public int visibility;
     public float worldX;                    // world position
     public float worldY;                    // world position
+    //public Vector3 worldPos;
     
     public bool walkable;                   // is it obstacle
     public bool doorLocked = false;
@@ -28,17 +30,15 @@ public class TileData : IHeapItem<TileData>
 
     [NonSerialized] public List<TileData> myNeighbours = new List<TileData>();
     [NonSerialized] public List<TileData> myFourNeighbours = new List<TileData>();
+    [NonSerialized] public TileData[] closestWalkable = new TileData[4]; // hold closest walkable tile if you are not walkable yourself
 
+    public Tilemap tilemap;
     public TileData parentNode;
     
     public int gCost;   //the distance from starting cell node
     public int hCost;   //the distance from ending cell node
     private int heapIndex;
 
-    public Tilemap tilemap;
-    [NonSerialized] public TileData[] closestWalkable = new TileData[4]; // hold closest walkable tile if you are not walkable yourself
-    public int characterSortingOrder = 10;
-    
     public int fCost
     {
         get
@@ -46,8 +46,11 @@ public class TileData : IHeapItem<TileData>
             return gCost + hCost;
         }
     }
+    
+    public int characterSortingOrder = EffectTiles.frontSortingOrder;
 
-    public void Init(int gridX, int gridY, float worldX, float worldY, bool walkable, TileType tileType, Tilemap tilemap) {
+    public void Init(int gridX, int gridY, float worldX, float worldY, bool walkable, TileType tileType, Tilemap tilemap)
+    {
         this.gridX = gridX;
         this.gridY = gridY;
         this.worldX = worldX;
@@ -58,7 +61,8 @@ public class TileData : IHeapItem<TileData>
         this.name = gridX + ", " + gridY;
     }
 
-    public int HeapIndex{
+    public int HeapIndex
+    {
         get{
             return heapIndex;
         }
@@ -67,7 +71,8 @@ public class TileData : IHeapItem<TileData>
         }
     }
 
-    public int CompareTo(TileData tdToCompare){
+    public int CompareTo(TileData tdToCompare)
+    {
         int compare = fCost.CompareTo(tdToCompare.fCost);
         if(compare == 0){
             compare = hCost.CompareTo(tdToCompare.hCost);
