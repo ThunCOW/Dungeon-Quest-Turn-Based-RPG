@@ -28,6 +28,11 @@ public class TileData : IHeapItem<TileData>
     public bool doorLocked = false;
     public bool doorOpen = false;
 
+    /// <summary>
+    /// This bool is active when character has to change its own sorting order before movement begins.
+    /// </summary> 
+    public bool instantSortingOrderTransitionBool = false;
+
     [NonSerialized] public List<TileData> myNeighbours = new List<TileData>();
     [NonSerialized] public List<TileData> myFourNeighbours = new List<TileData>();
     [NonSerialized] public TileData[] closestWalkable = new TileData[4]; // hold closest walkable tile if you are not walkable yourself
@@ -47,7 +52,7 @@ public class TileData : IHeapItem<TileData>
         }
     }
     
-    public int characterSortingOrder = EffectTiles.frontSortingOrder;
+    public int characterSortingOrder = EffectTiles.defaultSortingOrderForCharaters;
 
     public void Init(int gridX, int gridY, float worldX, float worldY, bool walkable, TileType tileType, Tilemap tilemap)
     {

@@ -10,8 +10,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] private List<Tilemap> allTilemaps = null;
     //[SerializeField] private GameObject selectionBox = null;
     
-    [HideInInspector]
-    [SerializeField] private TileData[,] nodes;           // sorted 2d array of nodes, may contain null entries if the map is of an odd shape e.g. gaps
+    [SerializeField, HideInInspector] private TileData[,] nodes;           // sorted 2d array of nodes, may contain null entries if the map is of an odd shape e.g. gaps
+    
     public Tile door;
 
     public static Grid gridBase;
@@ -21,11 +21,11 @@ public class GridManager : MonoBehaviour
     public bool FixBounds = false;
     private void OnValidate()
     {
-        if(gridBase == null)
+        /*if(gridBase == null)
             gridBase = gameObject.GetComponent<Grid>();
 
         if(gridManager == null)
-            gridManager = this;
+            gridManager = this;*/
 
         /* 
             Functions with triggers
@@ -40,7 +40,7 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        if(createMapData)
+        /*if(createMapData)
         {
             createMapData = false;
             foreach(Tilemap tilemap in allTilemaps)
@@ -56,7 +56,7 @@ public class GridManager : MonoBehaviour
                     bounds[StaticClass.yMax] = tilemap.cellBounds.yMax;
             }
             CreateGrid();
-        }
+        }*/
     }
     
     [Space]
@@ -64,24 +64,18 @@ public class GridManager : MonoBehaviour
 
     private void Awake()
     {
-        foreach(Tilemap tilemap in allTilemaps)
-        {
-            // here we circle through tilemaps to find xMin xMax yMin yMax
-            if(tilemap.cellBounds.xMin < bounds[StaticClass.xMin])
-                bounds[StaticClass.xMin] = tilemap.cellBounds.xMin;
-            if(tilemap.cellBounds.xMax > bounds[StaticClass.xMax])
-                bounds[StaticClass.xMax] = tilemap.cellBounds.xMax;
-            if(tilemap.cellBounds.yMin < bounds[StaticClass.yMin])
-                bounds[StaticClass.yMin] = tilemap.cellBounds.yMin;
-            if(tilemap.cellBounds.yMax > bounds[StaticClass.yMax])
-                bounds[StaticClass.yMax] = tilemap.cellBounds.yMax;
-        }
-        CreateGrid();
+        if(gridBase == null)
+            gridBase = gameObject.GetComponent<Grid>();
+
+        if(gridManager == null)
+            gridManager = this;
+        
+        //CreateGrid();
     }
 
     void Start () 
     {
-        //CreateGrid();
+        CreateGrid();
     }
 
     /*private void Update() {
@@ -96,9 +90,23 @@ public class GridManager : MonoBehaviour
     public static int[] bounds = new int[7];
     void CreateGrid()
     {
+        Debug.Log("Creating Grid");
+        foreach(Tilemap tilemap in allTilemaps)
+        {
+            // here we circle through tilemaps to find xMin xMax yMin yMax
+            if(tilemap.cellBounds.xMin < bounds[StaticClass.xMin])
+                bounds[StaticClass.xMin] = tilemap.cellBounds.xMin;
+            if(tilemap.cellBounds.xMax > bounds[StaticClass.xMax])
+                bounds[StaticClass.xMax] = tilemap.cellBounds.xMax;
+            if(tilemap.cellBounds.yMin < bounds[StaticClass.yMin])
+                bounds[StaticClass.yMin] = tilemap.cellBounds.yMin;
+            if(tilemap.cellBounds.yMax > bounds[StaticClass.yMax])
+                bounds[StaticClass.yMax] = tilemap.cellBounds.yMax;
+        }
+
         // create nodes array as big as our map size we calculated above
         nodes = new TileData[Mathf.Abs(bounds[StaticClass.xMin]) + Mathf.Abs(bounds[StaticClass.xMax]) + 1, Mathf.Abs(bounds[StaticClass.yMin]) + Mathf.Abs(bounds[StaticClass.yMax]) + 1];
-
+        
         // Create tiles 
         for (int x = bounds[StaticClass.xMin]; x < bounds[StaticClass.xMax]; x++)
         {
@@ -295,7 +303,7 @@ public class GridManager : MonoBehaviour
     }
     
     public void BlockTile(Vector3 tilePos)
-    {
+    {   
         Vector3Int localPos = gridBase.WorldToCell(tilePos); // grid component can be used instead of this
 
         TileData td = nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])];

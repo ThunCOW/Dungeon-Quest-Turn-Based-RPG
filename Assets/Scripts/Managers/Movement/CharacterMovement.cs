@@ -6,7 +6,7 @@ using TileFOV;
 public abstract class CharacterMovement : MonoBehaviour
 {
     protected SortingGroup sortingGroup;
-    protected Vector3 oldPos, newPos;   // sending it to GridManager to block the new tile we are standing on, and unblocking the old tile 
+    protected Vector3 currentPos, newPos;   // sending it to GridManager to block the new tile we are standing on, and unblocking the old tile 
     
     protected List<Vector3> walkableTilesPositions = null; // right click
 
@@ -49,11 +49,12 @@ public abstract class CharacterMovement : MonoBehaviour
 
         // dumb variables
         seekerTransform = transform;
-        oldPos = transform.position;
+        currentPos = transform.position;
         newPos = transform.position;
 
         //updates
-        GridManager.gridManager.BlockTile(transform.position);
+        Debug.Log("Tile Position: " + transform.position);
+        //GridManager.gridManager.BlockTile(transform.position);
     }
 
     
@@ -112,19 +113,22 @@ public abstract class CharacterMovement : MonoBehaviour
                     //transform.position = newPos;
 
                     // increase turn after our 1 turn of action is over
-                    GridManager.gridManager.UnBlockTile(oldPos);
+                    GridManager.gridManager.UnBlockTile(currentPos);
                     GridManager.gridManager.BlockTile(newPos);
-                    oldPos = newPos;
+                    currentPos = newPos;
                     StaticClass.gameTurn++;
                 }
             }
             else
             {
-                //TileData td = GridManager.gridManager.GetTileDataByLocalPosition(oldPos);
-                //sortingGroup.sortingOrder = td.characterSortingOrder;
-
-
                 newPos = targetPos;
+
+                TileData currentTD = GridManager.gridManager.GetTileDataByLocalPosition(currentPos);
+                TileData nextTD = GridManager.gridManager.GetTileDataByLocalPosition(newPos);
+                if(currentTD.instantSortingOrderTransitionBool)
+                {
+                    sortingGroup.sortingOrder = nextTD.characterSortingOrder;
+                }
                 path.RemoveAt(0);
                 
                 isLerping = true;
@@ -132,9 +136,9 @@ public abstract class CharacterMovement : MonoBehaviour
                 //transform.position = newPos;
 
                 // increase turn after our 1 turn of action is over
-                GridManager.gridManager.UnBlockTile(oldPos);
+                GridManager.gridManager.UnBlockTile(currentPos);
                 GridManager.gridManager.BlockTile(newPos);
-                oldPos = newPos;
+                currentPos = newPos;
                 StaticClass.gameTurn++;
             }
         }

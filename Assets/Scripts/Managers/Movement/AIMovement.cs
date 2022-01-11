@@ -12,7 +12,7 @@ public class AIMovement : CharacterMovement
     {
         base.Awake();
 
-        isSelectedOnEditor = false;
+        //isSelectedOnEditor = false;
     }
 
     //private bool test = true;

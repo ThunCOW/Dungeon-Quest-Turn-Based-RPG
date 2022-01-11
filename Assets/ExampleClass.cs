@@ -1,27 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-public class ExampleClass : MonoBehaviour
+[System.Serializable]
+public class Cell
 {
-    public string login = "username";
-    public string login2 = "no action here";
-
-    void OnGUI()
+    TileData tileData;
+    public Cell(int gridX, int gridY, int worldX, int worldY, bool walkable, TileType tileType, Tilemap tilemap)
     {
-        GUI.SetNextControlName("user");
-        login = GUI.TextField(new Rect(10, 10, 130, 20), login);
-        Debug.Log("enters");
-        login2 = GUI.TextField(new Rect(10, 40, 130, 20), login2);
-        if (Event.current.isKey && Event.current.keyCode == KeyCode.Return && GUI.GetNameOfFocusedControl() == "user")
-            Debug.Log("Login");
-
-        if (GUI.Button(new Rect(150, 10, 50, 20), "Login"))
-            Debug.Log("Login");
+        tileData = new TileData();
+        tileData.Init(gridX, gridY, worldX, worldY, walkable, tileType, tilemap);
     }
 }
 
-public class ButtonState
+[System.Serializable]
+public class Array
 {
-    public bool mouseDownOverControl;
+    public List<Cell> cells = new List<Cell>();
+    public Cell this[int index] => cells[index];
+}
+
+[System.Serializable]
+public class TileMatrix
+{
+    public List<Array> arrays = new List<Array>();
+    public Cell this[int x, int y] => arrays[x][y];
+}
+
+public class ExampleClass : MonoBehaviour
+{
+    private void OnValidate() 
+    {
+        TileMatrix[,] tm = new TileMatrix[4,4];
+        Debug.Log(tm[0,1]);
+    }
 }

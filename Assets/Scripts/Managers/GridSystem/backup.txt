@@ -1,25 +1,89 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.Serialization;
 
 //Grid
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] private List<Tilemap> tileMaps = null;
+    [FormerlySerializedAs("tileMaps")]
+    [SerializeField] private List<Tilemap> allTilemaps = null;
     //[SerializeField] private GameObject selectionBox = null;
- 
-    //[SerializeField] private GameObject gridNode = null;            // where the generated tiles will be stored
-    //[SerializeField] private GameObject nodePrefab = null;          // world tile prefab
     
-    private TileData[,] nodes;           // sorted 2d array of nodes, may contain null entries if the map is of an odd shape e.g. gaps
+    [SerializeField, HideInInspector] private TileData[,] nodes;           // sorted 2d array of nodes, may contain null entries if the map is of an odd shape e.g. gaps
+    [SerializeField, HideInInspector] private TileData[] TileDataArray;
+
     public Tile door;
-    private void Awake() {
-        StaticClass.gridManager = this;
-        StaticClass.gridBase = gameObject.GetComponent<Grid>();
+
+    public static Grid gridBase;
+    public static GridManager gridManager;
+
+    [Space]
+    public bool FixBounds = false;
+    private void OnValidate()
+    {
+        if(gridBase == null)
+            gridBase = gameObject.GetComponent<Grid>();
+
+        if(gridManager == null)
+            gridManager = this;
+
+        /* 
+            Functions with triggers
+        */
+
+        if(FixBounds)
+        {
+            FixBounds = false;
+            foreach(Tilemap tilemap in allTilemaps)
+            {
+                tilemap.CompressBounds();
+            }
+        }
+
+        if(createMapData)
+        {
+            createMapData = false;
+            foreach(Tilemap tilemap in allTilemaps)
+            {
+                // here we circle through tilemaps to find xMin xMax yMin yMax
+                if(tilemap.cellBounds.xMin < bounds[StaticClass.xMin])
+                    bounds[StaticClass.xMin] = tilemap.cellBounds.xMin;
+                if(tilemap.cellBounds.xMax > bounds[StaticClass.xMax])
+                    bounds[StaticClass.xMax] = tilemap.cellBounds.xMax;
+                if(tilemap.cellBounds.yMin < bounds[StaticClass.yMin])
+                    bounds[StaticClass.yMin] = tilemap.cellBounds.yMin;
+                if(tilemap.cellBounds.yMax > bounds[StaticClass.yMax])
+                    bounds[StaticClass.yMax] = tilemap.cellBounds.yMax;
+            }
+            TileDataArray = new TileData[bounds[StaticClass.yMax] * bounds[StaticClass.xMax]];
+            CreateGrid();
+        }
+    }
+    
+    [Space]
+    public bool createMapData = false;
+
+    private void Awake()
+    {
+        foreach(Tilemap tilemap in allTilemaps)
+        {
+            // here we circle through tilemaps to find xMin xMax yMin yMax
+            if(tilemap.cellBounds.xMin < bounds[StaticClass.xMin])
+                bounds[StaticClass.xMin] = tilemap.cellBounds.xMin;
+            if(tilemap.cellBounds.xMax > bounds[StaticClass.xMax])
+                bounds[StaticClass.xMax] = tilemap.cellBounds.xMax;
+            if(tilemap.cellBounds.yMin < bounds[StaticClass.yMin])
+                bounds[StaticClass.yMin] = tilemap.cellBounds.yMin;
+            if(tilemap.cellBounds.yMax > bounds[StaticClass.yMax])
+                bounds[StaticClass.yMax] = tilemap.cellBounds.yMax;
+        }
+        //CreateGrid();
     }
 
-    void Start () {
-        CreateGrid();
+    void Start () 
+    {
+        //CreateGrid();
     }
 
     /*private void Update() {
@@ -31,141 +95,201 @@ public class GridManager : MonoBehaviour
         }
     }*/
 
-    void CreateGrid(){
-
-        foreach(Tilemap tempTileMap in tileMaps)
-        {   // here we circle through tilemaps to find xMin xMax yMin yMax 
-            if(tempTileMap.cellBounds.xMin < bounds[StaticClass.xMin])
-                bounds[StaticClass.xMin] = tempTileMap.cellBounds.xMin;
-            if(tempTileMap.cellBounds.xMax > bounds[StaticClass.xMax])
-                bounds[StaticClass.xMax] = tempTileMap.cellBounds.xMax;
-            if(tempTileMap.cellBounds.yMin < bounds[StaticClass.yMin])
-                bounds[StaticClass.yMin] = tempTileMap.cellBounds.yMin;
-            if(tempTileMap.cellBounds.yMax > bounds[StaticClass.yMax])
-                bounds[StaticClass.yMax] = tempTileMap.cellBounds.yMax;
-        }
-
-        //Debug.Log("xMin = " + bounds[StaticClass.xMin] + " xMax = " + bounds[StaticClass.xMax] + "\nyMin = " + bounds[StaticClass.yMin] + " yMax = " + bounds[StaticClass.yMax]);
+    public static int[] bounds = new int[7];
+    void CreateGrid()
+    {
+        // create nodes array as big as our map size we calculated above
         nodes = new TileData[Mathf.Abs(bounds[StaticClass.xMin]) + Mathf.Abs(bounds[StaticClass.xMax]) + 1, Mathf.Abs(bounds[StaticClass.yMin]) + Mathf.Abs(bounds[StaticClass.yMax]) + 1];
-        //tileCount = Mathf.Abs(bounds[StaticClass.xMin]) + Mathf.Abs(bounds[StaticClass.xMax]) * Mathf.Abs(bounds[StaticClass.yMin]) + Mathf.Abs(bounds[StaticClass.yMax]);
 
-        for (int x = bounds[StaticClass.xMin]; x < bounds[StaticClass.xMax]; x++){
-            for (int y = bounds[StaticClass.yMin]; y < bounds[StaticClass.yMax]; y++){
-                foreach (Tilemap tempTileMap in tileMaps)   // circle through tilemaps in our scene and check their tag next
+        // Create tiles 
+        for (int x = bounds[StaticClass.xMin]; x < bounds[StaticClass.xMax]; x++)
+        {
+            for (int y = bounds[StaticClass.yMin]; y < bounds[StaticClass.yMax]; y++)
+            {
+                Vector3Int localPos = (new Vector3Int(x, y, (int)gridBase.transform.position.z));    // local positions of tiles
+                Vector3 worldPos = gridBase.CellToWorld(localPos);                                   // exact world positions of tiles
+                
+                foreach (Tilemap tilemap in allTilemaps)   // circle through tilemaps in our scene
                 {
-                    Vector3Int localPos = (new Vector3Int(x, y, (int)tempTileMap.transform.position.z));    // local positions of tiles
-                    Vector3 worldPos = tempTileMap.CellToWorld(localPos);                                   // exact world positions of tiles
-                    worldPos = new Vector3(worldPos.x + StaticClass.cellSize/2, worldPos.y + StaticClass.cellSize/2, worldPos.z);   // being used to create a game object in the middle of a tile
-                    
-                    // if node already exist, and next tilemap has tile over same node, dont create another gameObject.
-                    //TODO: if next tilemap blocks the way, like a door, set it to not walkable
-                    if(nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])] != null){
-                        //Debug.Log("node already exist" + nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])].name);
-                        if(tempTileMap.CompareTag("Unwalkable") && tempTileMap.HasTile(localPos))
+                    if(tilemap.HasTile(localPos))   // if there is no tile, there is nothing to create or change
+                    {
+                        //TileData tileData = nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])];
+                        TileData tileData = TileDataArray[localPos.x * Mathf.Abs(bounds[StaticClass.yMax]) + localPos.y];
+                        
+                        if(tileData != null)    // means this position has two tile, like a floor and door on top of it.
                         {
-                            TileData td = nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])];
-
-                            td.walkable = false;
-                            td.tileType = TileType.unwalkable;
+                            if(tilemap.CompareTag("Unwalkable"))
+                            {
+                                tileData.walkable = false;
+                                tileData.tileType = TileType.unwalkable;
+                            }
+                            if(tilemap.CompareTag("Door"))
+                            {
+                                tileData.walkable = true;
+                                tileData.tileType = TileType.door;
+                            }
+                            if(tilemap.CompareTag("SeeThrough"))
+                            {
+                                tileData.walkable = false;
+                                tileData.tileType = TileType.seeThrough;
+                            }
                         }
-                        if(tempTileMap.CompareTag("Door") && tempTileMap.HasTile(localPos)){
-                            TileData td = nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])];
-
-                            td.walkable = true;
-                            td.tileType = TileType.door;
-                        }
-                    }
-                    else{
-                        if(tempTileMap.CompareTag("Floor") && tempTileMap.HasTile(localPos))    // if floor
+                        else    // this position has no TileData created, create TileData for position
                         {
-                            TileData td = new TileData();
-                            //Debug.Log("new node" + localPos);
-                            td.Init(localPos.x, localPos.y, true, TileType.walkable);
-                            nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])] = td;
-                            StaticClass.tileCount++;
+                            tileData = CreateSingularTileData(localPos);
 
-                            td.tilemap = tempTileMap;
-                        }
-                        else if(tempTileMap.CompareTag("Unwalkable") && tempTileMap.HasTile(localPos))
-                        {
-                            //Debug.Log("new node" + localPos);
-                            TileData td = new TileData();
-                            td.Init(localPos.x, localPos.y, false, TileType.unwalkable);
-                            nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])] = td;
-                            StaticClass.tileCount++;
-
-                            td.tilemap = tempTileMap;
-                        }else if(tempTileMap.CompareTag("Door") && tempTileMap.HasTile(localPos))
-                        {
-                            //Debug.Log("new node" + localPos);
-                            TileData td = new TileData();
-                            td.Init(localPos.x, localPos.y, true, TileType.door);
-                            nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])] = td;
-                            StaticClass.tileCount++;
-
-                            td.tilemap = tempTileMap;
+                            if(tilemap.CompareTag("Floor"))    // if floor
+                            {
+                                tileData.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, true, TileType.walkable, tilemap);
+                            }
+                            else if(tilemap.CompareTag("Unwalkable"))
+                            {
+                                tileData.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, false, TileType.unwalkable, tilemap);
+                            }
+                            else if(tilemap.CompareTag("Door"))
+                            {
+                                tileData.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, true, TileType.door, tilemap);
+                            }
                         }
                     }
                 }
             }
         }
 
-        // every tile stores their neighbours
-        for (int x = bounds[StaticClass.xMin]; x < bounds[StaticClass.xMax]; x++){
-            for (int y = bounds[StaticClass.yMin]; y < bounds[StaticClass.yMax]; y++){
-                if (nodes[x + Mathf.Abs(bounds[StaticClass.xMin]), y + Mathf.Abs(bounds[StaticClass.yMin])] != null) { // if there is a tile at this position, get its neighbours
-                    TileData td = nodes[x + Mathf.Abs(bounds[StaticClass.xMin]), y + Mathf.Abs(bounds[StaticClass.yMin])]; 
-                    if(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) + 1, y + Mathf.Abs(bounds[StaticClass.yMin])] != null){ // x + 1 yani sağında node var mı
-                        td.myNeighbours.Add(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) + 1, y + Mathf.Abs(bounds[StaticClass.yMin])]); 
-                        td.myFourNeighbours.Add(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) + 1, y + Mathf.Abs(bounds[StaticClass.yMin])]);
-                    }
-                    if(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) + 1, y + Mathf.Abs(bounds[StaticClass.yMin]) + 1] != null) // x + 1 y + 1 yani sağ çapraz üst node var mı
-                        td.myNeighbours.Add(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) + 1, y + Mathf.Abs(bounds[StaticClass.yMin]) + 1]);
-                    try{    // index -1 olunca hata almamak için 
-                        if(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) + 1, y + Mathf.Abs(bounds[StaticClass.yMin]) - 1] != null) // x + 1 y - 1 yani sağ çapraz alt node var mı
-                            td.myNeighbours.Add(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) + 1, y + Mathf.Abs(bounds[StaticClass.yMin]) - 1]);
-                    }catch{}
-                    try{
-                        if(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) - 1, y + Mathf.Abs(bounds[StaticClass.yMin])] != null){ // x - 1 yani solunda node var mı
-                            td.myNeighbours.Add(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) - 1, y + Mathf.Abs(bounds[StaticClass.yMin])]); 
-                            td.myFourNeighbours.Add(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) - 1, y + Mathf.Abs(bounds[StaticClass.yMin])]);
+        // Find neighbours of every tile
+        for (int x = bounds[StaticClass.xMin]; x < bounds[StaticClass.xMax]; x++)
+        {
+            for (int y = bounds[StaticClass.yMin]; y < bounds[StaticClass.yMax]; y++)
+            {
+                //TileData currentTileData = nodes[x + Mathf.Abs(bounds[StaticClass.xMin]), y + Mathf.Abs(bounds[StaticClass.yMin])];
+                TileData currentTileData = TileDataArray[x * Mathf.Abs(bounds[StaticClass.yMax]) + y];
+                
+                if(currentTileData != null)
+                {
+                    // c for column r for row, traverse all 8 neighbour of one square tile
+                    for(int c = -1; c <= 1; c++)
+                    {
+                        for(int r = -1; r <= 1; r++)
+                        {
+                            try
+                            {
+                                if(c == 0 && r == 0)    // Dont add yourself to neighbour list
+                                    continue;
+                                
+                                //TileData neighbour = nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) + c, y + Mathf.Abs(bounds[StaticClass.yMin]) + r];
+                                TileData neighbour = TileDataArray[(x + c) * Mathf.Abs(bounds[StaticClass.yMax]) + (y + r)];
+                                if(neighbour != null)
+                                {
+                                    // 8 neighbour of tile
+                                    currentTileData.myNeighbours.Add(neighbour);
+                                    
+                                    // 4 neighbour of tile
+                                    if(Mathf.Abs(c) != Mathf.Abs(r))
+                                    {
+                                        currentTileData.myFourNeighbours.Add(neighbour);
+                                    }
+                                }
+                            }
+                            catch{}
                         }
-                    }catch{}
-                    try{
-                        if(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) - 1, y + Mathf.Abs(bounds[StaticClass.yMin]) + 1] != null) // x - 1 y + 1 yani sol çapraz üst node var mı
-                            td.myNeighbours.Add(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) - 1, y + Mathf.Abs(bounds[StaticClass.yMin]) + 1]);
-                    }catch{}
-                    try{
-                        if(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) - 1, y + Mathf.Abs(bounds[StaticClass.yMin]) - 1] != null) // x - 1 y - 1 yani sol çapraz alt node var mı
-                            td.myNeighbours.Add(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) - 1, y + Mathf.Abs(bounds[StaticClass.yMin]) - 1]);
-                    }catch{}
-                    if(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]), y + Mathf.Abs(bounds[StaticClass.yMin]) + 1] != null){ // y + 1 yani üstte node var mı
-                        td.myNeighbours.Add(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]), y + Mathf.Abs(bounds[StaticClass.yMin]) + 1]); 
-                        td.myFourNeighbours.Add(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]), y + Mathf.Abs(bounds[StaticClass.yMin]) + 1]);
                     }
-                    try{
-                        if(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]), y + Mathf.Abs(bounds[StaticClass.yMin]) - 1] != null){ // y - 1 yani altta node var mı
-                            td.myNeighbours.Add(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]), y + Mathf.Abs(bounds[StaticClass.yMin]) - 1]); 
-                            td.myFourNeighbours.Add(nodes[x + Mathf.Abs(bounds[StaticClass.xMin]), y + Mathf.Abs(bounds[StaticClass.yMin]) - 1]);
+                    
+                    // Find closest walkable tile for 4 directions
+                    if(currentTileData.walkable == false)
+                    {
+
+                        // direction 
+                        //  0 = south   / -y
+                        //  1 = west    / -x
+                        //  2 = north   / y
+                        //  3 = east    / x
+                        for(int direction = 0; direction < 4; direction++)
+                        {
+                            int increasePoint = 1;
+                            if(direction == 0 || direction == 1)
+                            {
+                                increasePoint = -1; // -y and -x will decrease in number, others will increase
+                            }
+                            
+                            // For every direction we will continue in that direction until we find a tile or find that there is no tile
+                            TileData walkableTile = null;
+                            while(true)
+                            {
+                                if(direction == 0 || direction == 2)
+                                {
+                                    try
+                                    {
+                                        // Only y axis will increase / decrease
+                                        //walkableTile = nodes[x + Mathf.Abs(bounds[StaticClass.xMin]), y + Mathf.Abs(bounds[StaticClass.yMin]) + increasePoint];
+                                        walkableTile = TileDataArray[x * Mathf.Abs(bounds[StaticClass.yMax]) + y + increasePoint];
+                                    }catch{}
+                                    
+                                    // if goes out of bound, means there is a wall tile that connected to nothing
+                                    if(bounds[StaticClass.yMin] > increasePoint || bounds[StaticClass.yMax] < increasePoint)
+                                    {
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        // Only x axis will increase / decrease
+                                        //walkableTile = nodes[x + Mathf.Abs(bounds[StaticClass.xMin]) + increasePoint, y + Mathf.Abs(bounds[StaticClass.yMin])];
+                                        walkableTile = TileDataArray[(x + increasePoint) * Mathf.Abs(bounds[StaticClass.yMax]) + y];
+                                    }catch{}
+                                    
+                                    // if goes out of bound, means there is a wall tile that connected to nothing
+                                    if(bounds[StaticClass.xMin] > increasePoint || bounds[StaticClass.xMax] < increasePoint)
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                if(walkableTile == null)
+                                    break;
+
+                                if(walkableTile.walkable)
+                                {
+                                    currentTileData.closestWalkable[direction] = walkableTile;
+                                    break;
+                                }
+                                increasePoint = (increasePoint > 0)?++increasePoint:--increasePoint;
+                            }
                         }
-                    }catch{}
+                    }
                 }
             }
         }
     }
 
+    public TileData CreateSingularTileData(Vector3Int localPos)
+    {
+        TileData td = new TileData();
+        //nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])] = td;
+        TileDataArray[localPos.x * Mathf.Abs(bounds[StaticClass.yMax]) + localPos.y] = td;
+        StaticClass.tileCount++;
+
+        return td;
+    }
+
+    // This will translate world position to local position before locating TD
     public TileData GetTileDataByLocalPosition(Vector3 worldPosition)
     {
-        Vector3Int localPos = StaticClass.gridBase.WorldToCell(worldPosition); // grid component can be used instead of this
+        Vector3Int localPos = gridBase.WorldToCell(worldPosition); // grid component can be used instead of this
         
-        TileData tempTileData = null;
-        try{
-            tempTileData = nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])];
-            if(tempTileData.walkable)
-                return tempTileData;
+        TileData tileData = null;
+        try
+        {
+            //tileData = nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])];
+            tileData = TileDataArray[localPos.x * Mathf.Abs(bounds[StaticClass.yMax]) + localPos.y];
+            if(tileData.walkable)
+                return tileData;
             else
-                return tempTileData;
-        }catch{
+                return tileData;
+        }
+        catch
+        {
             // target is outside of map
         }
         return null;
@@ -173,19 +297,56 @@ public class GridManager : MonoBehaviour
 
     public void UnBlockTile(Vector3 tilePos)
     {
-        /*Vector3Int localPos = StaticClass.gridBase.WorldToCell(tilePos); // grid component can be used instead of this
+        Vector3Int localPos = gridBase.WorldToCell(tilePos); // grid component can be used instead of this
 
-        TileData td = nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])];
-        td.walkable = true;*/
+        //TileData td = nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])];
+        TileData td = TileDataArray[localPos.x * Mathf.Abs(bounds[StaticClass.yMax]) + localPos.y];
+        td.walkable = true;
     }
     
     public void BlockTile(Vector3 tilePos)
     {
-        /*Vector3Int localPos = StaticClass.gridBase.WorldToCell(tilePos); // grid component can be used instead of this
+        Vector3Int localPos = gridBase.WorldToCell(tilePos); // grid component can be used instead of this
 
-        TileData td = nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])];
-        td.walkable = false;*/
+        //TileData td = nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])];
+        TileData td = TileDataArray[localPos.x * Mathf.Abs(bounds[StaticClass.yMax]) + localPos.y];
+        td.walkable = false;
     }
 
-    public int[] bounds = new int[7];
+    // TODO: Duplicate of PathFinding GetDistance
+    private int GetDistance(TileData nodeA, TileData nodeB)
+    {
+        int dstX = Mathf.Abs(nodeA.gridX- nodeB.gridX);
+        int dstY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
+    
+        if (dstX > dstY)
+            return 14 * dstY + 10 * (dstX - dstY);
+        return 14 * dstX + 10 * (dstY - dstX);
+    }
+
+    [HideInInspector] public bool canDrawGizmo = false;
+    private void OnDrawGizmos() 
+    {
+        if(canDrawGizmo)
+        {
+            if(nodes != null){
+                int i = 0;
+                foreach (TileData tileData in nodes)
+                {
+                    if(tileData != null)
+                    {
+                        i++;
+                        if(tileData.tilemap.CompareTag("Door"))
+                            Gizmos.color = Color.magenta;
+                        else
+                            Gizmos.color = (tileData.walkable)?Color.green:Color.red;
+                        
+                        Vector3 worldPos = new Vector3(tileData.worldX + StaticClass.cellSize / 2, tileData.worldY + StaticClass.cellSize / 2, 0);
+                        Gizmos.DrawCube(worldPos, Vector3.one * 0.35f);
+                    }
+                }
+                //Debug.Log("Tile Number: " + i);
+            }
+        }
+    }
 }
