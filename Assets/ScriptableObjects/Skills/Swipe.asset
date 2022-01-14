@@ -15,8 +15,11 @@ MonoBehaviour:
   id: 694525cf766eb554785b009cf730b25d
   Name: Swipe
   Icon: {fileID: 21300000, guid: 02c8b0f2eda226445a95057b7f05ae52, type: 3}
+  Tile: {fileID: 0}
   MaximumStacks: 1
   itemType: 0
+  Sound: {fileID: 8300000, guid: fded595aa0a90294eb5d6f5c5dccb195, type: 3}
+  itemAnimationObject: {fileID: 7156623015529406131, guid: 748456049db9196488b9c857a130dfc2, type: 3}
   isConsumable: 0
   TimedStatEffects:
   - name: Bleed

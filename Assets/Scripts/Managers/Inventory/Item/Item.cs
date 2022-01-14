@@ -31,6 +31,7 @@ public class Item : ScriptableObject
     public int MaximumStacks = 1;
 
     public ItemType itemType;
+    public AudioClip Sound;
 
     protected static readonly StringBuilder sb = new StringBuilder();
 

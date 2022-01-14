@@ -21,11 +21,11 @@ public class GridManager : MonoBehaviour
     public bool FixBounds = false;
     private void OnValidate()
     {
-        /*if(gridBase == null)
+        if(gridBase == null)
             gridBase = gameObject.GetComponent<Grid>();
 
         if(gridManager == null)
-            gridManager = this;*/
+            gridManager = this;
 
         /* 
             Functions with triggers
@@ -64,6 +64,12 @@ public class GridManager : MonoBehaviour
 
     private void Awake()
     {
+        
+#if (UNITY_ANDROID)
+        QualitySettings.vSyncCount = 0;
+		Application.targetFrameRate = 300;
+#endif
+
         if(gridBase == null)
             gridBase = gameObject.GetComponent<Grid>();
 
@@ -90,7 +96,6 @@ public class GridManager : MonoBehaviour
     public static int[] bounds = new int[7];
     void CreateGrid()
     {
-        Debug.Log("Creating Grid");
         foreach(Tilemap tilemap in allTilemaps)
         {
             // here we circle through tilemaps to find xMin xMax yMin yMax
@@ -342,7 +347,6 @@ public class GridManager : MonoBehaviour
                         Gizmos.DrawCube(worldPos, Vector3.one * 0.35f);
                     }
                 }
-                //Debug.Log("Tile Number: " + i);
             }
         }
     }

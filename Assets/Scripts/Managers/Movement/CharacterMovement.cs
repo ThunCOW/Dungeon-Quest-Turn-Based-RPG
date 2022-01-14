@@ -5,6 +5,11 @@ using TileFOV;
 
 public abstract class CharacterMovement : MonoBehaviour
 {
+    /// <summary>
+    /// The audio which will play when character moves a step
+    /// </summary>
+    public AudioClip Sound;
+
     protected SortingGroup sortingGroup;
     protected Vector3 currentPos, newPos;   // sending it to GridManager to block the new tile we are standing on, and unblocking the old tile 
     
@@ -53,8 +58,7 @@ public abstract class CharacterMovement : MonoBehaviour
         newPos = transform.position;
 
         //updates
-        Debug.Log("Tile Position: " + transform.position);
-        //GridManager.gridManager.BlockTile(transform.position);
+        GridManager.gridManager.BlockTile(transform.position);
     }
 
     
@@ -189,7 +193,7 @@ public abstract class CharacterMovement : MonoBehaviour
             TileData td = GridManager.gridManager.GetTileDataByLocalPosition(targetPos);
             sortingGroup.sortingOrder = td.characterSortingOrder;
         }
-        if(t >= 1)
+        if(t >= 1)                          // character landed on a tile
         {
             halfTimePassed = false;
 
@@ -201,6 +205,11 @@ public abstract class CharacterMovement : MonoBehaviour
             
             Vinteger v = new Vinteger(targetPos.x, targetPos.y);
             fov.Refresh(v);
+
+            if(Sound != null)
+                AudioSource.PlayClipAtPoint(Sound, transform.position);
+            else
+                Debug.LogError(gameObject.name + " has no movement sound attached!");
         }
 
         float y = moveCurve.Evaluate(t);

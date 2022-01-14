@@ -6,17 +6,28 @@ using System.Security.Cryptography;
 [CreateAssetMenu(menuName = "Items/Usable Item - Skill")]
 public class UsableItem : Item
 {
+    public GameObject itemAnimationObject;
+    
+    /// <summary>
+    /// If an item is consumable, it will be removed after use.
+    /// </summary>
     public bool isConsumable;
 
     //public List<UsableItemEffect> Effects;    // the original
 
     //public List<UsableItemEffectTwo> Effects = new List<UsableItemEffectTwo>();
 
-    //[ContextMenuItem("Delete Effect", "DeleteEffectt")]
+    /// <summary>
+    /// Time based effects will trigger every turn or second.
+    /// </summary>
     public List<StatTimedEffect> TimedStatEffects;
-
     //[ContextMenuItem("Delete Effect", "DeleteEffectt")]
+
+    /// <summary>
+    /// Instant effects will trigger only once.
+    /// </summary>
     public List<StatInstantEffect> InstantStatEffects;
+    //[ContextMenuItem("Delete Effect", "DeleteEffectt")]
 
     /*private void DeleteEffectt()
     {
@@ -99,6 +110,16 @@ public class UsableItem : Item
             }
             else    // instant effect, no need to store it
                 effect.ExecuteEffect(this, character);
+        }
+
+        if(itemAnimationObject != null)
+        {
+            Instantiate(itemAnimationObject, character.transform.position + (Vector3.one / 2), character.transform.rotation);
+            if(Sound != null)
+            {
+                //character.audioSource.PlayOneShot(Sound);
+                AudioSource.PlayClipAtPoint(Sound, character.transform.position);
+            }
         }
     }
 

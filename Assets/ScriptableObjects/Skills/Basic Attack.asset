@@ -18,11 +18,13 @@ MonoBehaviour:
   Tile: {fileID: 0}
   MaximumStacks: 1
   itemType: 0
+  itemAnimationClip: {fileID: 7400000, guid: 0cf5cb3ecf6bca144ba56be53bccf03b, type: 2}
+  itemAnimationObject: {fileID: 4780336410560809502, guid: 4b317b9d32d39454bb9a413b6d399a12, type: 3}
   isConsumable: 0
   TimedStatEffects: []
   InstantStatEffects:
-  - name: 
+  - name: asd
     id: instant_effect.-1524465930
-    Icon: {fileID: 0}
+    Icon: {fileID: 21300000, guid: bcbceb4bda9616148864109fcd0945b1, type: 3}
     statType: 0
-    Amount: 0
+    Amount: 10

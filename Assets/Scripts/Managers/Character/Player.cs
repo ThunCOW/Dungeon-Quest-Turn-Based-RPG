@@ -125,6 +125,7 @@ public class Player : Character
                 {
                     if(selectedSkillorUsable is UsableItem)
                     {
+                        animator.SetTrigger("Right");
                         UsableItem usableItem = selectedSkillorUsable as UsableItem;
                         usableItem.Use(targetedCharacter);
                     }

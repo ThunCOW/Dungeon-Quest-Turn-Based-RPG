@@ -602,14 +602,14 @@ GUILayout.EndHorizontal();
         boldStyle.fontStyle = FontStyle.Bold;
 
         selectedObject = serializedObject;
-        serializedObject.FindProperty("isSelectedOnEditor").boolValue = true;
-        serializedObject.ApplyModifiedProperties();
+        selectedObject.FindProperty("isSelectedOnEditor").boolValue = true;
+        selectedObject.ApplyModifiedProperties();
     }
 
     void OnDisable()
     {
-        serializedObject.FindProperty("isSelectedOnEditor").boolValue = false;
-        serializedObject.ApplyModifiedProperties();
+        selectedObject.FindProperty("isSelectedOnEditor").boolValue = false;
+        selectedObject.ApplyModifiedProperties();
 
         Tools.current = Tool.Move;
     }

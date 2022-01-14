@@ -891,9 +891,12 @@ MonoBehaviour:
   buffs: []
   debuffs: []
   invis: 0
-  firstChoiceSkills: []
-  secondChoiceSkills: []
-  thirdChoiceSkills: []
+  firstChoiceSkills:
+  - {fileID: 11400000, guid: d363cceb08a797b46aa24c5970d4927c, type: 2}
+  secondChoiceSkills:
+  - {fileID: 11400000, guid: d363cceb08a797b46aa24c5970d4927c, type: 2}
+  thirdChoiceSkills:
+  - {fileID: 11400000, guid: d363cceb08a797b46aa24c5970d4927c, type: 2}
 --- !u!114 &2330834800200191911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -908,6 +911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 0}
   path: []
+  ViggleDegree: 0
   timeToMoveOneTile: 0.5
   curveScale: 0.07
   moveCurve:
@@ -945,7 +949,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   wanderingTiles: []
   canDrawGizmo: 0
-  isSelectedOnEditor: 0
   gizmosColor: {r: 0.3478212, g: 0.7017938, b: 0, a: 1}
 --- !u!114 &2330834800200191930
 MonoBehaviour:
@@ -963,6 +966,7 @@ MonoBehaviour:
   viewDistance: 3
   fovTiles_Parent: {fileID: 2330834800674137331}
   fov_tile_prefab: {fileID: 3191605211086352369, guid: c467784d4902923459fd3d446988bfc8, type: 3}
+  testList: []
 --- !u!114 &2330834800200191905
 MonoBehaviour:
   m_ObjectHideFlags: 0

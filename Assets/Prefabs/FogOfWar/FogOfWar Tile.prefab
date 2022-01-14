@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6028141052917733335}
   - component: {fileID: 1920408607}
   - component: {fileID: 1920408606}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: FogOfWar Tile
   m_TagString: Player
   m_Icon: {fileID: 0}
