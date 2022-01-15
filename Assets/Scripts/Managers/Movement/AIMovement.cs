@@ -8,6 +8,13 @@ public class AIMovement : CharacterMovement
 {
     public List<Vector3> wanderingTiles = new List<Vector3>();
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        //isSelectedOnEditor = false;
+    }
+
     //private bool test = true;
     public override void MovementAction(float movementPoint) 
     {
@@ -141,15 +148,22 @@ public class AIMovement : CharacterMovement
         }*/
     }
 
+#if UNITY_EDITOR
     // Gizmos for WanderingPath creator editor
     [HideInInspector] public bool canDrawGizmo = false;
-    [HideInInspector] public bool isSelectedOnEditor = false;
+    [HideInInspector] private bool _isSelectedOnEditor = false;
+    [HideInInspector] public bool isSelectedOnEditor{
+        get{return _isSelectedOnEditor;}
+        set
+        {
+            _isSelectedOnEditor = value;
+        }
+    }
     [HideInInspector] public Color gizmosColor = Color.green;
     [ExecuteInEditMode]
     protected override void OnDrawGizmos() 
     {
         base.OnDrawGizmos();
-        #if UNITY_EDITOR
 
         if(isSelectedOnEditor)
         {
@@ -186,6 +200,11 @@ public class AIMovement : CharacterMovement
             }
         }
 
-        #endif
     }
+
+    private void OnApplicationQuit() 
+    {
+        isSelectedOnEditor = false;    
+    }
+#endif
 }

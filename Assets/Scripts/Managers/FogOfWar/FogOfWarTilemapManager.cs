@@ -27,27 +27,13 @@ public class FogOfWarTilemapManager : MonoBehaviour
         
     }
 
-    public TileData[,] nodes;
-    public int[] bounds = new int[7];
     void CreateFog()
     {
-        foreach(Tilemap tempTileMap in allTileMaps)
-        {   // here we circle through tilemaps to find xMin xMax yMin yMax 
-            if(tempTileMap.cellBounds.xMin < bounds[StaticClass.xMin])
-                bounds[StaticClass.xMin] = tempTileMap.cellBounds.xMin;
-            if(tempTileMap.cellBounds.xMax > bounds[StaticClass.xMax])
-                bounds[StaticClass.xMax] = tempTileMap.cellBounds.xMax;
-            if(tempTileMap.cellBounds.yMin < bounds[StaticClass.yMin])
-                bounds[StaticClass.yMin] = tempTileMap.cellBounds.yMin;
-            if(tempTileMap.cellBounds.yMax > bounds[StaticClass.yMax])
-                bounds[StaticClass.yMax] = tempTileMap.cellBounds.yMax;
-        }
-
-        for (int x = bounds[StaticClass.xMin]; x < bounds[StaticClass.xMax]; x++)
+        for (int x = GridManager.bounds[StaticClass.xMin]; x < GridManager.bounds[StaticClass.xMax]; x++)
         {
-            for (int y = bounds[StaticClass.yMin]; y < bounds[StaticClass.yMax]; y++)
+            for (int y = GridManager.bounds[StaticClass.yMin]; y < GridManager.bounds[StaticClass.yMax]; y++)
             {
-                Vector3Int localPos = (new Vector3Int(x, y, (int)StaticClass.gridBase.transform.position.z));    // local positions of tiles
+                Vector3Int localPos = (new Vector3Int(x, y, (int)GridManager.gridBase.transform.position.z));    // local positions of tiles
                 
                 foreach (Tilemap tileMap in allTileMaps)   // circle through tilemaps in our scene
                 {
@@ -59,6 +45,7 @@ public class FogOfWarTilemapManager : MonoBehaviour
                 }
             }
         }
+        fogTileMap.CompressBounds();
     }
 
     public bool night;

@@ -12,11 +12,9 @@ namespace TileFOV
 
         public List<Vector2Int> visibleTiles; 
 
-        GridManager gridManager;
         private void Start()
         {
-            // Needs to run before CharacterMovement Start func
-            gridManager = StaticClass.gridManager;
+        
         }
 
         public void Refresh(Vinteger pos)
@@ -52,7 +50,7 @@ namespace TileFOV
                     if(fullShadow)
                     {
                         // TODO: 28.36
-                        TileData td = gridManager.GetTileDataByLocalPosition(new Vector3(pos.x, pos.y, 0));
+                        TileData td = GridManager.gridManager.GetTileDataByLocalPosition(new Vector3(pos.x, pos.y, 0));
                         if(td != null)
                         {
                             Vector3Int tempVec = new Vector3Int(pos.x, pos.y, 0);
@@ -78,13 +76,14 @@ namespace TileFOV
                         bool visible = !line.IsInShadow(projection);
 
                         // TODO: 31.22
-                        TileData td = gridManager.GetTileDataByLocalPosition(new Vector3(pos.x, pos.y));
+                        TileData td = GridManager.gridManager.GetTileDataByLocalPosition(new Vector3(pos.x, pos.y));
 
                         bool isWall = false;
 
                         if(td != null)
                         {
-                            if(!td.walkable || (td.tileType == TileType.door && !td.doorOpen))
+                            DoorTile doorTile = td as DoorTile;
+                            if(!td.walkable || (td is DoorTile && !doorTile.doorOpen))
                             {
                                 isWall = true;
                             }
@@ -130,7 +129,7 @@ namespace TileFOV
                     float posDist = pos.Distance(start);
                     if(posDist > shadowDistance * StaticClass.cellSize)
                     {
-                        TileData td = gridManager.GetTileDataByLocalPosition(new Vector3(pos.x, pos.y));
+                        TileData td = GridManager.gridManager.GetTileDataByLocalPosition(new Vector3(pos.x, pos.y));
                         if(td != null)
                         {
                             // We can use this to color tiles that are not within view distance
@@ -170,7 +169,7 @@ namespace TileFOV
             bool retVal = true;
 
             // Checks if position is within grid bounds
-            if(x < gridManager.bounds[StaticClass.xMin] || y < gridManager.bounds[StaticClass.yMin] || x > gridManager.bounds[StaticClass.xMax] - 1 || y > gridManager.bounds[StaticClass.yMax] - 1)
+            if(x < GridManager.bounds[StaticClass.xMin] || y < GridManager.bounds[StaticClass.yMin] || x > GridManager.bounds[StaticClass.xMax] - 1 || y > GridManager.bounds[StaticClass.yMax] - 1)
                 retVal = false;
 
             if(retVal)

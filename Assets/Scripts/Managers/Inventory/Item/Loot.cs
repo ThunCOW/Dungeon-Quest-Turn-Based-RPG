@@ -9,16 +9,21 @@ public class Loot : MonoBehaviour
     private bool canLoot = false;
     private bool isEmpty;
 
-    private void OnValidate() {
+    private void OnValidate()
+    {
         if(inventory == null)
+        {
             inventory = FindObjectOfType<Inventory>();
+        }
     }
 
-    private void Update(){
+    private void Update()
+    {
         if(canLoot && !isEmpty && Input.GetKeyDown(KeyCode.E))
         {
             Item itemCopy = Instantiate(item.GetCopy());
-            if(inventory.AddItem(itemCopy)){
+            if(inventory.AddItem(itemCopy))
+            {
                 amount--;
                 if(amount == 0)
                 {
@@ -32,13 +37,19 @@ public class Loot : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerEnter2D(Collider2D other)
+    {
         if(other.CompareTag("Player"))
+        {
             canLoot = true;
+        }
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
+    private void OnTriggerExit2D(Collider2D other)
+    {
         if(other.CompareTag("Player"))
+        {
             canLoot = false;
+        }
     }
 }

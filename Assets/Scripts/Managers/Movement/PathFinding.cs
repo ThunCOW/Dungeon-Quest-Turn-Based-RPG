@@ -10,8 +10,8 @@ public class PathFinding
         //Stopwatch sw = new Stopwatch();
         //sw.Start();
 
-        TileData startNode = StaticClass.gridManager.GetTileDataByLocalPosition(startPosition);
-        TileData targetNode = StaticClass.gridManager.GetTileDataByLocalPosition(endPosition);
+        TileData startNode = GridManager.gridManager.GetTileDataByLocalPosition(startPosition);
+        TileData targetNode = GridManager.gridManager.GetTileDataByLocalPosition(endPosition);
         if(targetNode == null)
             return;
 
@@ -64,6 +64,14 @@ public class PathFinding
                 }
                 
                 if (!neighbour.walkable || closedSet.Contains(neighbour) || movementPoint <= 0) continue;     // if neighbour is not walkable or we already been on it, skip
+                
+                // If we can not move behind of an object to front of it, we have to go around it.
+                if(currentNode.characterSortingOrder == EffectTiles.behindSortingOrder &&
+                    (neighbour.characterSortingOrder == EffectTiles.frontSortingOrder ||
+                    neighbour.characterSortingOrder == EffectTiles.frontOnlySortingOrder)) continue;
+                // If we can not move from front of an object to behind of it, we have to go around it.
+                if(currentNode.characterSortingOrder == EffectTiles.frontOnlySortingOrder &&
+                    neighbour.characterSortingOrder == EffectTiles.behindSortingOrder) continue;
 
                 if(newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
                 {

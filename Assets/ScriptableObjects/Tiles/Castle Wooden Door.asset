@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696334989257ee448bf5153ab6015eb3, type: 3}
+  m_Name: Castle Wooden Door
+  m_EditorClassIdentifier: 
+  tileSteppingSound: {fileID: 8300000, guid: 1107d3cc7a7ace4489074b3b1940a3d5, type: 3}
+  footstepVolumeMultiplier: 2
+  doorOpeningSound: {fileID: 8300000, guid: 355bb0886415132409e066365db53e25, type: 3}
+  doorOpeningVolumeMultiplier: 2
+  doorClosingSound: {fileID: 8300000, guid: 4fd0a2ecacebe7c4c861a48312195da8, type: 3}
+  doorClosingVolumeMultiplier: 2
+  doorOpenTile: {fileID: 11400000, guid: 0c9812d9f74dadf429c2b96cb1eccd32, type: 2}
+  doorClosedTile: {fileID: 11400000, guid: ad249c400ac8a854fb55e32186d0f327, type: 2}

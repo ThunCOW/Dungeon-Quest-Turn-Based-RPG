@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
@@ -102,17 +102,13 @@ public class Character : MonoBehaviour
 
     protected virtual void OnValidate()
     {
-        /*if(characterMovement == null)
-            characterMovement = GetComponent<CharacterMovement>();
-        if(equipmentManager == null)
-            equipmentManager = GetComponent<CharacterEquipmentManager>();
-
-        if(characterEquipments == null)
-            characterEquipments = GetComponentsInChildren<CharacterEquipment>();*/
+        
     }
 
     protected virtual void Awake()
     {
+        animator = transform.GetChild(0).GetComponent<Animator>();
+        audioSource = GetComponentInChildren<AudioSource>();
         // Setup Events:
         // On Character Death
         //OnDeath += turnBasedCombat.CharacterDeath;
@@ -204,7 +200,12 @@ public class Character : MonoBehaviour
         }
     }
 
-    protected virtual void Attack(){}
+    [HideInInspector] protected Animator animator;
+    [HideInInspector] public AudioSource audioSource;
+    protected virtual void Attack()
+    {
+        
+    }
 
 
     // Add Stat Effects

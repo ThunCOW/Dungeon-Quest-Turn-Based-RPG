@@ -22,6 +22,7 @@ public enum StatType{
 [CreateAssetMenu(menuName = "Items/Item")]
 public class Item : ScriptableObject
 {
+    [Header("Item Properties")]
     [SerializeField] string id;
     public string ID {get{return id;}}
     public string Name;
@@ -31,6 +32,11 @@ public class Item : ScriptableObject
     public int MaximumStacks = 1;
 
     public ItemType itemType;
+    
+    [Header("Audio Properties")]
+    public AudioClip Sound;
+    [Range(1,10)]
+    public int volumeMultiplier = 1;
 
     protected static readonly StringBuilder sb = new StringBuilder();
 

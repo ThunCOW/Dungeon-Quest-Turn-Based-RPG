@@ -4,10 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using TileFOV;
+using System;
 
 public class PlayerMovement : CharacterMovement
 {
     public GameObject playerCamera;
+
+    protected override void Awake()
+    {
+        current = this;
+    }
 
     protected override void Start()
     {
@@ -19,7 +25,8 @@ public class PlayerMovement : CharacterMovement
     {
 #if (UNITY_ANDROID)
         MobileInputs();
-#else
+#endif
+#if (UNITY_EDITOR)
         MouseInputs((int)movementPoint);
 #endif
         if(Input.GetKeyDown(KeyCode.Space))
@@ -54,8 +61,8 @@ public class PlayerMovement : CharacterMovement
                 if(readyToCalculatePath)
                 {
                     Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // mouse world position
-                    Vector3Int localPos = StaticClass.gridBase.WorldToCell(mousePos);   // mouse world to tile local position
-                    Vector3 worldPos = StaticClass.gridBase.CellToWorld(localPos);  // tile to world position
+                    Vector3Int localPos = GridManager.gridBase.WorldToCell(mousePos);   // mouse world to tile local position
+                    Vector3 worldPos = GridManager.gridBase.CellToWorld(localPos);  // tile to world position
 
                     if(targetLocalPos != localPos)
                     {
@@ -104,8 +111,9 @@ public class PlayerMovement : CharacterMovement
     private IEnumerator PlayAction()
     {
         yield return new WaitForSeconds(timeToMoveOneTile);
-        fogOfWarTilemapManager.ShadowTiles();
-        fov.EnableColliders();
+        fogOfWarTilemapManager.ShadowTiles();               // Here we put shadow over tiles that are not visible anymore
+        fov.EnableColliders();                              // Enabling this will trigger collision and tiles that are visible now will be cleared
+        MovementStepComplete();
         yield return new WaitForFixedUpdate();
         yield return new WaitForEndOfFrame();
 
@@ -157,8 +165,8 @@ public class PlayerMovement : CharacterMovement
         if(isTouchedToMove)
         {
             Vector3 touchPos = Camera.main.ScreenToWorldPoint(touchToMove.position);
-            Vector3Int localPos = StaticClass.gridBase.WorldToCell(touchPos);
-            Vector3 worldPos = StaticClass.gridBase.CellToWorld(localPos);
+            Vector3Int localPos = GridManager.gridBase.WorldToCell(touchPos);
+            Vector3 worldPos = GridManager.gridBase.CellToWorld(localPos);
 
             if(targetLocalPos != localPos)
             {
@@ -170,7 +178,7 @@ public class PlayerMovement : CharacterMovement
             }
 
             
-            Vector3Int targetTilePos = StaticClass.gridBase.WorldToCell(new Vector3(path[0].worldX, path[0].worldY, 0));
+            Vector3Int targetTilePos = GridManager.gridBase.WorldToCell(new Vector3(path[0].worldX, path[0].worldY, 0));
             switch (touchToMove.phase)
             {
                 //When a touch has first been detected, change the message and record the starting position
@@ -199,6 +207,17 @@ public class PlayerMovement : CharacterMovement
                     touchToMove.fingerId = -1;*/
                     break;
             }
+        }
+    }
+
+    public static PlayerMovement current ;
+
+    public event Action onMovementStepComplete;
+    public void MovementStepComplete()
+    {
+        if(onMovementStepComplete != null)
+        {
+            onMovementStepComplete();
         }
     }
 }

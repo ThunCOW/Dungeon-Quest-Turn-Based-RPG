@@ -12,18 +12,18 @@ namespace TileFOV
         [SerializeField] GameObject fov_tile_prefab = null;
         private GameObject[,] nodes;
 
-        GridManager gridManager;
+        FogOfWarTilemapManager fogOfWarTilemapManager;
         private void Start()
         {
             // Needs to run before CharacterMovement Start func
-            gridManager = StaticClass.gridManager;
+            fogOfWarTilemapManager = FindObjectOfType<FogOfWarTilemapManager>().GetComponent<FogOfWarTilemapManager>();
             
             CreateFov();
         }
 
         private void CreateFov()
         {
-            Vector3Int localPos = StaticClass.gridBase.WorldToCell(transform.position);
+            Vector3Int localPos = GridManager.gridBase.WorldToCell(transform.position);
             Vinteger v = new Vinteger(localPos.x, localPos.y);
 
             nodes = new GameObject[50,50];
@@ -50,6 +50,11 @@ namespace TileFOV
         private int viewDistanceCurrent;
         public void Refresh(Vinteger pos)
         {
+            fovTiles_Parent.transform.position = transform.position;    // every time updated, change position back to character's position
+            // during movement action, we set parent to null so boxes do not move/lerp, then change parent back to character
+            fovTiles_Parent.transform.parent = transform;
+
+            // if character sight changed, destroy old fov tiles and create new ones
             if(viewDistanceCurrent != viewDistance)
             {
                 foreach(Transform child in fovTiles_Parent.transform)
@@ -60,15 +65,26 @@ namespace TileFOV
                 CreateFov();
             }
 
+
             for(int octant = 0; octant < 8; octant++)
             {
                 RefreshOctant(pos, octant);
             }
-            fovTiles_Parent.transform.position = transform.position;    // every time updated, change position back to character's position
-            // during movement action, we set parent to null so boxes do not move/lerp, then change parent back to character
-            fovTiles_Parent.transform.parent = transform;
+
+            /*fogOfWarTilemapManager.ClearFog(transform.position, transform.position);
+            testList.Clear();
+            foreach(FoVTile fovTile in fovTile_nodes)
+            {
+                if(fovTile != null)
+                {
+                    testList.Add(fovTile);
+                    fovTile.ClearTile(transform.position);
+                }
+            }*/
         }
 
+        private FoVTile[,] fovTile_nodes = new FoVTile[50, 50];
+        public List<FoVTile> testList;
         private void RefreshOctant(Vinteger start, int octant, int maxRows = 999)
         {
             ShadowLine line = new ShadowLine();
@@ -96,36 +112,62 @@ namespace TileFOV
 
                         bool visible = !line.IsInShadow(projection);
 
-                        TileData td = gridManager.GetTileDataByLocalPosition(new Vector3(pos.x, pos.y));
+                        TileData td = GridManager.gridManager.GetTileDataByLocalPosition(new Vector3(pos.x, pos.y));
 
                         bool isWall = false;
 
                         if(td != null)
                         {
-                            if((td.tileType == TileType.unwalkable && !td.walkable) || (td.tileType == TileType.door && !td.doorOpen))
+                            Vector2Int fov_tilePosition = new Vector2Int((pos.x - start.x), (pos.y - start.y));
+                            GameObject fovTile = nodes[fov_tilePosition.x + viewDistance, fov_tilePosition.y + viewDistance];
+                            
+                            Color color = Color.blue;
+                            
+                            DoorTile doorTile = td as DoorTile;
+                            if((td.tileType == TileType.unwalkable && !td.walkable) || (td is DoorTile && !doorTile.doorOpen))
                             {
                                 isWall = true;
                             }
 
-                            Vector2Int fov_tilePosition = new Vector2Int((pos.x - start.x), (pos.y - start.y));
-                            Color color = Color.blue;
                             if(!visible)
                             {
                                 color = Color.red;
                                 
-                                GameObject fovTile = nodes[fov_tilePosition.x + viewDistance, fov_tilePosition.y + viewDistance];
                                 if(fovTile.activeSelf)
                                 {
                                     fovTile.GetComponent<BoxDetector>().DisableBox();
+                                    //fovTile_nodes[fov_tilePosition.x + viewDistance, fov_tilePosition.y + viewDistance].Active = false;
                                 }
                             }
-                            else
+                            else if(visible)
                             {
-                                GameObject fovTile = nodes[fov_tilePosition.x + viewDistance, fov_tilePosition.y + viewDistance];
-                                if(!fovTile.activeSelf)
+                                /*fovTile_nodes[fov_tilePosition.x + viewDistance, fov_tilePosition.y + viewDistance].Active = true;
+                                if(!isWall)
                                 {
-                                    fovTile.SetActive(true);
+                                    if(!fovTile.activeSelf)
+                                    {*/
+                                        fovTile.SetActive(true);
+                                    /*}
                                 }
+                                else
+                                {
+                                    color = Color.red;
+
+                                    if(fovTile.activeSelf)
+                                    {
+                                        fovTile.GetComponent<BoxDetector>().DisableBox();
+                                    }
+                                }*/
+
+                                /*if(gameObject.CompareTag("Player"))
+                                {
+                                    //Debug.Log(fovTile.transform.position);
+                                    // Clear fog tile
+                                    if(fogOfWarTilemapManager != null)
+                                    {
+                                        fogOfWarTilemapManager.ClearFog(fovTile.transform.position, transform.position);
+                                    }
+                                }*/
                             }
 
                             //Vector3Int tilePos = new Vector3Int(pos.x, pos.y, 0);
@@ -133,6 +175,18 @@ namespace TileFOV
                         }
                         else
                         {
+                            Vector2Int fov_tilePosition = new Vector2Int((pos.x - start.x), (pos.y - start.y));
+
+                            Color color = Color.red;
+                                
+                            GameObject fovTile = nodes[fov_tilePosition.x + viewDistance, fov_tilePosition.y + viewDistance];
+                            if(fovTile.activeSelf)
+                            {
+                                fovTile.GetComponent<BoxDetector>().DisableBox();
+                                //fovTile_nodes[fov_tilePosition.x + viewDistance, fov_tilePosition.y + viewDistance].Position = fovTile.transform.position;
+                                //fovTile_nodes[fov_tilePosition.x + viewDistance, fov_tilePosition.y + viewDistance].Active = false;
+                            }
+
                             isWall = true;
                         }
 
@@ -178,11 +232,15 @@ namespace TileFOV
                             go.GetComponent<BoxDetector>().characterDetection = GetComponent<CharacterDetection>();
 
                             nodes[fov_tilePosition.x + viewDistance, fov_tilePosition.y + viewDistance] = go;
+                            
+                            /*FoVTile newTile = new FoVTile(fogOfWarTilemapManager, fov_tilePosition.x, fov_tilePosition.y);
+                            fovTile_nodes[fov_tilePosition.x + viewDistance, fov_tilePosition.y + viewDistance] = newTile;*/
                         }
                     }
                 }
             }
         }
+        //public List<FoVTile> fovTileList = new List<FoVTile>();
 
         public void DisableColliders()
         {
@@ -209,7 +267,7 @@ namespace TileFOV
             bool retVal = true;
 
             // Checks if position is within grid bounds
-            if(x < gridManager.bounds[StaticClass.xMin] || y < gridManager.bounds[StaticClass.yMin] || x > gridManager.bounds[StaticClass.xMax] - 1 || y > gridManager.bounds[StaticClass.yMax] - 1)
+            if(x < GridManager.bounds[StaticClass.xMin] || y < GridManager.bounds[StaticClass.yMin] || x > GridManager.bounds[StaticClass.xMax] - 1 || y > GridManager.bounds[StaticClass.yMax] - 1)
                 retVal = false;
 
             if(retVal)
@@ -255,6 +313,30 @@ namespace TileFOV
             float bottomRight = (float)(col + 1) / (row + 1);
 
             return new Shadow(topLeft, bottomRight, new Vinteger(col, row + 2), new Vinteger(col + 1, row + 1));
+        }
+    }
+
+    [System.Serializable]
+    public class FoVTile
+    {
+        private FogOfWarTilemapManager fogOfWarTilemapManager;
+        private int x, y;
+        public bool Active = true;
+
+        public FoVTile(FogOfWarTilemapManager fogOfWarTilemapManager, int x, int y, bool active = true)
+        {
+            this.fogOfWarTilemapManager = fogOfWarTilemapManager;
+            this.x = x;
+            this.y = y;
+            Active = active;
+        }
+
+        public void ClearTile(Vector3 playerPos)
+        {
+            if(Active)
+            {
+                fogOfWarTilemapManager.ClearFog(new Vector2(playerPos.x + x, playerPos.y + y), playerPos);
+            }
         }
     }
 }

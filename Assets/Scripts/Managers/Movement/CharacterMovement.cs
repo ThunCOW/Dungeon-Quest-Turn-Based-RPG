@@ -1,15 +1,22 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using UnityEngine.Rendering;
 using UnityEngine;
 using TileFOV;
 
 public abstract class CharacterMovement : MonoBehaviour
 {
-    protected Vector3 oldPos, newPos;   // sending it to GridManager to block the new tile we are standing on, and unblocking the old tile 
+    [Header("Audio")]
+    [SerializeField] protected AudioSource audioSource;
+    
+
+    protected SortingGroup sortingGroup;
+    protected Vector3 currentPos, newPos;   // sending it to GridManager to block the new tile we are standing on, and unblocking the old tile 
     
     protected List<Vector3> walkableTilesPositions = null; // right click
 
     //public int movementPoint = 3;
     protected Transform seekerTransform;
+    [Space]
     public Transform targetTransform;
     protected Vector3 targetLocalPos;
 
@@ -17,7 +24,6 @@ public abstract class CharacterMovement : MonoBehaviour
 
     [SerializeField] protected List<TileData> path = new List<TileData>();
     
-    protected GridManager gridManager;
     protected FovGridBased fov;
 
     protected FogOfWarTilemapManager fogOfWarTilemapManager;
@@ -26,28 +32,33 @@ public abstract class CharacterMovement : MonoBehaviour
         if(fogOfWarTilemapManager == null)
             fogOfWarTilemapManager = FindObjectOfType<FogOfWarTilemapManager>();
     }
+
+    protected virtual void Awake()
+    {
+        
+    }
     
     // Start is called before the first frame update
     protected virtual void Start()
     {
         // Get References
         fogOfWarTilemapManager = FindObjectOfType<FogOfWarTilemapManager>();
+        sortingGroup = GetComponent<SortingGroup>();
         //CalculateWalkableTiles();
         pathFinding = new PathFinding();
-        gridManager = StaticClass.gridManager;
 
         fov = GetComponent<FovGridBased>();
-        Vector3Int localPos = StaticClass.gridBase.WorldToCell(transform.position);
+        Vector3Int localPos = GridManager.gridBase.WorldToCell(transform.position);
         Vinteger v = new Vinteger(localPos.x, localPos.y);
         fov.Refresh(v);
 
         // dumb variables
         seekerTransform = transform;
-        oldPos = transform.position;
+        currentPos = transform.position;
         newPos = transform.position;
 
         //updates
-        gridManager.BlockTile(transform.position);
+        GridManager.gridManager.BlockTile(transform.position);
     }
 
     
@@ -81,50 +92,61 @@ public abstract class CharacterMovement : MonoBehaviour
             this.isLastTile = lastTile;
             this.targetPos = targetPos; // we either do this or set target position from inherited class, which is a nuisaince since easily forgettable
 
-            if(path[0].tileType == TileType.door)
+            if(path[0] is DoorTile)
             {
+                DoorTile doorTile = path[0] as DoorTile;
                 if(path.Count == 1)
                 {
-                    print("door clicked");
+                    //print("door clicked");
                     // player clicked over the door, does player want to move on door tile or want to close the door?
                     // player can't close door if standing on it
                     // player can close door if next to it
                     // game should ask if player want to close door when next to it, or want to move over door
                 }
-                if(path[0].doorLocked == false && path[0].doorOpen == false)    // if door is NOT open and NOT locked
+                if(doorTile.doorLocked == false && doorTile.doorOpen == false)    // if door is NOT open and NOT locked
                 {
-                    path[0].tilemap.SetTile(new Vector3Int(path[0].gridX, path[0].gridY, 0), StaticClass.gridManager.door);
-                    path[0].doorOpen = true;
+                    DoorTileObject tempObj = doorTile.tileObject as DoorTileObject;
+                    audioSource.PlayOneShot(tempObj.doorOpeningSound, tempObj.doorOpeningVolumeMultiplier);
+                    
+                    doorTile.tilemap.SetTile(new Vector3Int(doorTile.gridX, doorTile.gridY, 0), tempObj.doorOpenTile);
+                    doorTile.doorOpen = true;
                 }
                 else    // if door IS open
                 {
                     newPos = targetPos;
-                    path.RemoveAt(0);
+                    //path.RemoveAt(0);
                     
                     isLerping = true;
                     fov.DisableColliders();
                     //transform.position = newPos;
 
                     // increase turn after our 1 turn of action is over
-                    gridManager.UnBlockTile(oldPos);
-                    gridManager.BlockTile(newPos);
-                    oldPos = newPos;
+                    GridManager.gridManager.UnBlockTile(currentPos);
+                    GridManager.gridManager.BlockTile(newPos);
+                    currentPos = newPos;
                     StaticClass.gameTurn++;
                 }
             }
             else
             {
                 newPos = targetPos;
-                path.RemoveAt(0);
+
+                TileData currentTD = GridManager.gridManager.GetTileDataByLocalPosition(currentPos);
+                TileData nextTD = GridManager.gridManager.GetTileDataByLocalPosition(newPos);
+                if(currentTD.instantSortingOrderTransitionBool)
+                {
+                    sortingGroup.sortingOrder = nextTD.characterSortingOrder;
+                }
+                //path.RemoveAt(0);
                 
                 isLerping = true;
                 fov.DisableColliders();
                 //transform.position = newPos;
 
                 // increase turn after our 1 turn of action is over
-                gridManager.UnBlockTile(oldPos);
-                gridManager.BlockTile(newPos);
-                oldPos = newPos;
+                GridManager.gridManager.UnBlockTile(currentPos);
+                GridManager.gridManager.BlockTile(newPos);
+                currentPos = newPos;
                 StaticClass.gameTurn++;
             }
         }
@@ -134,6 +156,11 @@ public abstract class CharacterMovement : MonoBehaviour
     {
         path.Clear();
     }
+
+    /// <summary>
+    /// A bool to check if player has taken half of the way from one tile to another
+    /// </summary>
+    private bool halfTimePassed = false;
 
     protected void LerpToPos(Vector3 startPos, Vector3Int targetPos)
     {
@@ -164,8 +191,16 @@ public abstract class CharacterMovement : MonoBehaviour
         }
 
         t += Time.deltaTime * speedActual;
-        if(t >= 1)
+        if(t >= 0.5f && !halfTimePassed)   // half the time passed
         {
+            halfTimePassed = true;
+            TileData td = GridManager.gridManager.GetTileDataByLocalPosition(targetPos);
+            sortingGroup.sortingOrder = td.characterSortingOrder;
+        }
+        if(t >= 1)                          // character landed on a tile
+        {
+            halfTimePassed = false;
+
             t = 1;
             isLerping = false;
             initLerp = false;
@@ -174,6 +209,10 @@ public abstract class CharacterMovement : MonoBehaviour
             
             Vinteger v = new Vinteger(targetPos.x, targetPos.y);
             fov.Refresh(v);
+
+            audioSource.PlayOneShot(path[0].tileObject.tileSteppingSound, path[0].tileObject.footstepVolumeMultiplier);
+
+            path.RemoveAt(0);
         }
 
         float y = moveCurve.Evaluate(t);
