@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine.Rendering;
 using UnityEngine;
 using TileFOV;
 
 public abstract class CharacterMovement : MonoBehaviour
 {
-    /// <summary>
-    /// The audio which will play when character moves a step
-    /// </summary>
-    public AudioClip Sound;
+    [Header("Audio")]
+    [SerializeField] protected AudioSource audioSource;
+    
 
     protected SortingGroup sortingGroup;
     protected Vector3 currentPos, newPos;   // sending it to GridManager to block the new tile we are standing on, and unblocking the old tile 
@@ -17,6 +16,7 @@ public abstract class CharacterMovement : MonoBehaviour
 
     //public int movementPoint = 3;
     protected Transform seekerTransform;
+    [Space]
     public Transform targetTransform;
     protected Vector3 targetLocalPos;
 
@@ -92,25 +92,29 @@ public abstract class CharacterMovement : MonoBehaviour
             this.isLastTile = lastTile;
             this.targetPos = targetPos; // we either do this or set target position from inherited class, which is a nuisaince since easily forgettable
 
-            if(path[0].tileType == TileType.door)
+            if(path[0] is DoorTile)
             {
+                DoorTile doorTile = path[0] as DoorTile;
                 if(path.Count == 1)
                 {
-                    print("door clicked");
+                    //print("door clicked");
                     // player clicked over the door, does player want to move on door tile or want to close the door?
                     // player can't close door if standing on it
                     // player can close door if next to it
                     // game should ask if player want to close door when next to it, or want to move over door
                 }
-                if(path[0].doorLocked == false && path[0].doorOpen == false)    // if door is NOT open and NOT locked
+                if(doorTile.doorLocked == false && doorTile.doorOpen == false)    // if door is NOT open and NOT locked
                 {
-                    path[0].tilemap.SetTile(new Vector3Int(path[0].gridX, path[0].gridY, 0), GridManager.gridManager.door);
-                    path[0].doorOpen = true;
+                    DoorTileObject tempObj = doorTile.tileObject as DoorTileObject;
+                    audioSource.PlayOneShot(tempObj.doorOpeningSound, tempObj.doorOpeningVolumeMultiplier);
+                    
+                    doorTile.tilemap.SetTile(new Vector3Int(doorTile.gridX, doorTile.gridY, 0), tempObj.doorOpenTile);
+                    doorTile.doorOpen = true;
                 }
                 else    // if door IS open
                 {
                     newPos = targetPos;
-                    path.RemoveAt(0);
+                    //path.RemoveAt(0);
                     
                     isLerping = true;
                     fov.DisableColliders();
@@ -133,7 +137,7 @@ public abstract class CharacterMovement : MonoBehaviour
                 {
                     sortingGroup.sortingOrder = nextTD.characterSortingOrder;
                 }
-                path.RemoveAt(0);
+                //path.RemoveAt(0);
                 
                 isLerping = true;
                 fov.DisableColliders();
@@ -206,10 +210,9 @@ public abstract class CharacterMovement : MonoBehaviour
             Vinteger v = new Vinteger(targetPos.x, targetPos.y);
             fov.Refresh(v);
 
-            if(Sound != null)
-                AudioSource.PlayClipAtPoint(Sound, transform.position);
-            else
-                Debug.LogError(gameObject.name + " has no movement sound attached!");
+            audioSource.PlayOneShot(path[0].tileObject.tileSteppingSound, path[0].tileObject.footstepVolumeMultiplier);
+
+            path.RemoveAt(0);
         }
 
         float y = moveCurve.Evaluate(t);

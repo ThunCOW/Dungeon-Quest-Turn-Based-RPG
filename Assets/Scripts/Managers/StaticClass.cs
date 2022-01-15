@@ -19,4 +19,8 @@ public static class StaticClass{
     public static bool enemyTurn = false;
 
     public static Character inspectedCharacter;
+
+    public static float MasterVolume;
+    public static float BackgroundVolume;
+    public static float SoundEffectVolume;
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Security.Cryptography;
@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 [CreateAssetMenu(menuName = "Items/Usable Item - Skill")]
 public class UsableItem : Item
 {
+    [Header("Usable Item Properties")]
     public GameObject itemAnimationObject;
     
     /// <summary>
@@ -50,7 +51,7 @@ public class UsableItem : Item
         }
     }*/
     
-    protected override void OnValidate() 
+    protected override void OnValidate()
     {
         base.OnValidate();
         foreach (StatInstantEffect instantEffect in InstantStatEffects)
@@ -117,8 +118,8 @@ public class UsableItem : Item
             Instantiate(itemAnimationObject, character.transform.position + (Vector3.one / 2), character.transform.rotation);
             if(Sound != null)
             {
-                //character.audioSource.PlayOneShot(Sound);
-                AudioSource.PlayClipAtPoint(Sound, character.transform.position);
+                character.audioSource.PlayOneShot(Sound, volumeMultiplier);
+                //AudioSource.PlayClipAtPoint(Sound, character.transform.position, StaticClass.SoundEffectVolume);
             }
         }
     }

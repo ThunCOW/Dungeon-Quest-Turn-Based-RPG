@@ -123,7 +123,8 @@ namespace TileFOV
                             
                             Color color = Color.blue;
                             
-                            if((td.tileType == TileType.unwalkable && !td.walkable) || (td.tileType == TileType.door && !td.doorOpen))
+                            DoorTile doorTile = td as DoorTile;
+                            if((td.tileType == TileType.unwalkable && !td.walkable) || (td is DoorTile && !doorTile.doorOpen))
                             {
                                 isWall = true;
                             }

@@ -12,7 +12,7 @@ public class GridManager : MonoBehaviour
     
     [SerializeField, HideInInspector] private TileData[,] nodes;           // sorted 2d array of nodes, may contain null entries if the map is of an odd shape e.g. gaps
     
-    public Tile door;
+    //public Tile door;
 
     public static Grid gridBase;
     public static GridManager gridManager;
@@ -146,20 +146,7 @@ public class GridManager : MonoBehaviour
                         }
                         else    // this position has no TileData created, create TileData for position
                         {
-                            tileData = CreateSingularTileData(localPos);
-
-                            if(tilemap.CompareTag("Floor"))    // if floor
-                            {
-                                tileData.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, true, TileType.walkable, tilemap);
-                            }
-                            else if(tilemap.CompareTag("Unwalkable"))
-                            {
-                                tileData.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, false, TileType.unwalkable, tilemap);
-                            }
-                            else if(tilemap.CompareTag("Door"))
-                            {
-                                tileData.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, true, TileType.door, tilemap);
-                            }
+                            tileData = CreateSingularTileData(tilemap, localPos, worldPos);
                         }
                     }
                 }
@@ -269,13 +256,37 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public TileData CreateSingularTileData(Vector3Int localPos)
+    public TileData CreateSingularTileData(Tilemap tilemap, Vector3Int localPos, Vector3 worldPos)
     {
-        TileData td = new TileData();
-        nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])] = td;
         StaticClass.tileCount++;
-
-        return td;
+        MainTileObject tileObject = null;
+        if(tilemap.GetComponent<TileObjectHolder>() != null)
+        {
+            tileObject = tilemap.GetComponent<TileObjectHolder>().TileObject;
+        }
+        
+        if(tilemap.CompareTag("Floor"))    // if floor
+        {
+            TileData newTileData = new TileData();
+            nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])] = newTileData;
+            newTileData.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, true, TileType.walkable, tilemap, tileObject);
+            return newTileData;
+        }
+        else if(tilemap.CompareTag("Unwalkable"))
+        {
+            TileData newTileData = new TileData();
+            nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])] = newTileData;
+            newTileData.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, false, TileType.unwalkable, tilemap, tileObject);
+            return newTileData;
+        }
+        else if(tilemap.CompareTag("Door"))
+        {
+            DoorTile newDoorTileData = new DoorTile();
+            nodes[localPos.x + Mathf.Abs(bounds[StaticClass.xMin]), localPos.y + Mathf.Abs(bounds[StaticClass.yMin])] = newDoorTileData;
+            newDoorTileData.Init(localPos.x, localPos.y, worldPos.x, worldPos.y, true, TileType.door, tilemap, tileObject);
+            return newDoorTileData;
+        }
+        return null;
     }
 
     // This will translate world position to local position before locating TD

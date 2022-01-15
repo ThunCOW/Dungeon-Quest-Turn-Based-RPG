@@ -82,7 +82,8 @@ namespace TileFOV
 
                         if(td != null)
                         {
-                            if(!td.walkable || (td.tileType == TileType.door && !td.doorOpen))
+                            DoorTile doorTile = td as DoorTile;
+                            if(!td.walkable || (td is DoorTile && !doorTile.doorOpen))
                             {
                                 isWall = true;
                             }

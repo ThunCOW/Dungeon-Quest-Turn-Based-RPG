@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using System;
 //using UnityEngine.Serialization;
@@ -19,11 +19,15 @@ public class Inventory : MonoBehaviour, IItemContainer
     public event Action<Item> OnDragEvent;
     public event Action<ItemSlot> OnDropEvent;
 
-    private void Awake() {
+    private void Awake()
+    {
+
     }
 
-    private void Start() {
-        for(int i = 0; i < itemSlots.Length; i++){
+    private void Start()
+    {
+        for(int i = 0; i < itemSlots.Length; i++)
+        {
             itemSlots[i].OnPointerEnterEvent += OnPointerEnterEvent;
             itemSlots[i].OnPointerExitEvent += OnPointerExitEvent;
             itemSlots[i].OnRightClickEvent += OnRightClickEvent;
@@ -35,42 +39,52 @@ public class Inventory : MonoBehaviour, IItemContainer
         SetStartingItems();
     }
 
-    private void OnValidate() {
-        if(itemsParent != null){
+    private void OnValidate()
+    {
+        if(itemsParent != null)
+        {
             itemSlots = itemsParent.GetComponentsInChildren<ItemSlot>();
         }
     }
 
-    private void SetStartingItems(){
+    private void SetStartingItems()
+    {
         int i = 0;
-        for(; i < startingItems.Count && i < itemSlots.Length; i++){
+        for(; i < startingItems.Count && i < itemSlots.Length; i++)
+        {
             itemSlots[i].item = startingItems[i].GetCopy();
             itemSlots[i].Amount = 1;
             items.Add(itemSlots[i].item);
         }
 
-        for(; i < itemSlots.Length; i++){
+        for(; i < itemSlots.Length; i++)
+        {
             itemSlots[i].item = null;
             itemSlots[i].Amount = 0;
         }
         
-        for(i = startingItems.Count - 1; i >= 0; i--){
+        for(i = startingItems.Count - 1; i >= 0; i--)
+        {
             startingItems.RemoveAt(i);
         }
     }
 
-    private void RefreshUI(){
+    private void RefreshUI()
+    {
         int i = 0;
-        for(; i < items.Count && i < itemSlots.Length; i++){
+        for(; i < items.Count && i < itemSlots.Length; i++)
+        {
             itemSlots[i].item = items[i];
         }
 
-        for(; i < itemSlots.Length; i++){
+        for(; i < itemSlots.Length; i++)
+        {
             itemSlots[i].item = null;
         }
     }
 
-    public bool AddItem(Item item){
+    public bool AddItem(Item item)
+    {
         for(int i = 0; i < itemSlots.Length; i++)
         {
             if(itemSlots[i].item == null)                                       // Found an empty(null) slot
@@ -89,7 +103,8 @@ public class Inventory : MonoBehaviour, IItemContainer
         return false;
     }
 
-    public bool RemoveItem(Item item){
+    public bool RemoveItem(Item item)
+    {
         for(int i = 0; i < itemSlots.Length; i++)
         {
             if(itemSlots[i].item == item)
@@ -138,12 +153,14 @@ public class Inventory : MonoBehaviour, IItemContainer
         return null;
     }
 
-    public void SwapEquipmentItem(Item firstItem, Item secondItem){
+    public void SwapEquipmentItem(Item firstItem, Item secondItem)
+    {
         items[items.FindIndex(ind=>ind.Equals(firstItem))] = secondItem;
         RefreshUI();
     }
 
-    public void SwapInventoryItem(ItemSlot firstItemSlot, ItemSlot secondItemSlot){
+    public void SwapInventoryItem(ItemSlot firstItemSlot, ItemSlot secondItemSlot)
+    {
         if(firstItemSlot.item != null && secondItemSlot.item != null)
         {
             int secondIndex = items.FindIndex(ind=>ind.Equals(secondItemSlot.item));
@@ -158,7 +175,8 @@ public class Inventory : MonoBehaviour, IItemContainer
         }
     }
     
-    public bool CanAddItem(Item item, int amount = 1){
+    public bool CanAddItem(Item item, int amount = 1)
+    {
         int freeSpaces = 0;
 
         foreach (ItemSlot itemSlot in itemSlots)
@@ -172,13 +190,16 @@ public class Inventory : MonoBehaviour, IItemContainer
         return freeSpaces >= amount;
     }
 
-    public bool ContainsItem(Item item){
+    public bool ContainsItem(Item item)
+    {
         return items.Contains(item);
     }
 
-    public int ItemCount(string itemID){
+    public int ItemCount(string itemID)
+    {
         int number = 0;
-        for(int i = 0; i < itemSlots.Length; i++){
+        for(int i = 0; i < itemSlots.Length; i++)
+        {
             if(itemSlots[i].item.ID == itemID)
                 number += itemSlots[i].Amount;
         }
