@@ -180,8 +180,8 @@ public class Character : MonoBehaviour
     }*/
 
     // Tooltip functions
-    public virtual void ShowTooltip(ItemSlot itemSlot){}
-    public virtual void HideTooltip(Item item){}
+    public virtual void ShowTooltip(BaseItemSlot itemSlot){}
+    public virtual void HideTooltip(BaseItemSlot itemSlot){}
     public virtual void UpdateStatValues(){}
 
     public virtual void ChangeHealth(float damage)

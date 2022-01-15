@@ -1,7 +1,8 @@
-﻿{
+{
     "files.exclude":
     {
         "**/.DS_Store":true,
+        "!0_ManualPackages":true,
         "**/.git":true,
         "**/.gitignore":true,
         "**/.gitmodules":true,

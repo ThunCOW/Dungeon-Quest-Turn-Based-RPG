@@ -10,12 +10,12 @@ public class EquipmentPanel : MonoBehaviour
     [SerializeField] Text damageText = null;
     [SerializeField] Text armorText = null;
 
-    public event Action<ItemSlot> OnPointerEnterEvent;
-    public event Action<Item> OnPointerExitEvent;
-    public event Action<Item> OnRightClickEvent;
+    public event Action<BaseItemSlot> OnPointerEnterEvent;
+    public event Action<BaseItemSlot> OnPointerExitEvent;
+    public event Action<BaseItemSlot> OnRightClickEvent;
     public event Action<ItemSlot> OnBeginDragEvent;
     public event Action<ItemSlot> OnEndDragEvent;
-    public event Action<Item> OnDragEvent;
+    public event Action<BaseItemSlot> OnDragEvent;
     public event Action<ItemSlot> OnDropEvent;
 
     private void Start()
