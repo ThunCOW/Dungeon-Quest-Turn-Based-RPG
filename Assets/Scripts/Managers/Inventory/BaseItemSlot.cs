@@ -19,7 +19,7 @@ public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
 	protected Color normalColor = Color.white;
 	protected Color disabledColor = Color.clear;
 
-	protected Item _item;
+	protected Item _item = null;
 	public virtual Item item{
 		get{return _item;}
 		set
@@ -57,7 +57,7 @@ public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
 
 			if (amountText != null)
 			{
-				amountText.enabled = _item != null && _amount > 1;
+				amountText.enabled = _amount > 1;
 				if (amountText.enabled)
                 {
 					amountText.text = _amount.ToString();

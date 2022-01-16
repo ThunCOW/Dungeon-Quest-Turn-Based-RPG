@@ -97,15 +97,18 @@ public abstract class ItemContainer : MonoBehaviour//, IItemContainer
                 itemSlots[i].Amount--;
                 if(itemSlots[i].Amount == 0)
                 {
-                    int y = items.IndexOf(item);                                // Store index of item in items list to know from what point Amount variable will be changed
+                    // Store index of item in items list to know from what point Amount variable will be changed
+                    int y = items.IndexOf(item);                                
                     if(items.Remove(item))                                      // Remove current item from items list
                     {
-                        for(; y < items.Count && y < itemSlots.Count; y++)     // Get Amount information of next item slot
+                        /*
+                        for(; y < items.Count && y < itemSlots.Count; y++)      // Get Amount information of next item slot
                         {
                             //itemSlots[y].item = items[i];
                             itemSlots[y].Amount = itemSlots[y + 1].Amount;
                         }
-                        RefreshUI();                                            // Item is removed, refresh UI to see changes
+                        ReOrderItemContainer();                                 // Item is removed, refresh UI to see changes
+                        */
                     }else
                         return false;
                 }
@@ -132,7 +135,7 @@ public abstract class ItemContainer : MonoBehaviour//, IItemContainer
                         {
                             itemSlots[y].Amount = itemSlots[y + 1].Amount;
                         }
-                        RefreshUI();                                          // Item is removed, refresh UI to see changes
+                        ReOrderItemContainer();                                          // Item is removed, refresh UI to see changes
                     }else
                         return null;
                 }
@@ -145,7 +148,7 @@ public abstract class ItemContainer : MonoBehaviour//, IItemContainer
     /// <summary>
     /// This function is to make sure that there is no space between slots by being called everytime when one item is changed.
     /// </summary>
-    protected virtual void RefreshUI()
+    protected virtual void ReOrderItemContainer()
     {
         int i = 0;
         for(; i < items.Count && i < itemSlots.Count; i++)

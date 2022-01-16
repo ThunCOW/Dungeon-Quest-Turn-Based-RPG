@@ -44,11 +44,11 @@ public class Inventory : ItemContainer
             AddItem(startingItems[i]);
         }
 
-        for(i = items.Count; i < itemSlots.Count; i++)
+        /*for(i = items.Count; i < itemSlots.Count; i++)
         {
             itemSlots[i].item = null;
             itemSlots[i].Amount = 0;
-        }
+        }*/
         
         for(i = startingItems.Count - 1; i >= 0; i--)
         {
@@ -56,25 +56,46 @@ public class Inventory : ItemContainer
         }
     }
 
-    public void SwapEquipmentItem(Item firstItem, Item secondItem)
+    /// <summary>
+    /// Finds equippedItem's index and replaces item on that index with unequipped item.
+    /// </summary>
+    public void SwapEquipmentItem(BaseItemSlot equippedItemPreviousSlot, Item unequippedItem)
     {
-        items[items.FindIndex(ind=>ind.Equals(firstItem))] = secondItem;
-        RefreshUI();
+        items[items.FindIndex(ind=>ind.Equals(equippedItemPreviousSlot.item))] = unequippedItem;
+        equippedItemPreviousSlot.item = unequippedItem;
+        //ReOrderItemContainer();
     }
 
-    public void SwapInventoryItem(ItemSlot firstItemSlot, ItemSlot secondItemSlot)
+    public void SwapInventoryItem(ItemSlot dragItemSlot, ItemSlot dropItemSlot)
     {
-        if(firstItemSlot.item != null && secondItemSlot.item != null)
+        /*if(dragItemSlot.item != null && dropItemSlot.item != null)
         {
-            int secondIndex = items.FindIndex(ind=>ind.Equals(secondItemSlot.item));
-            items[items.FindIndex(ind=>ind.Equals(firstItemSlot.item))] = secondItemSlot.item;
-            items[secondIndex] = firstItemSlot.item;
+            int dropItemIndex = items.FindIndex(ind=>ind.Equals(dropItemSlot.item));
+            items[items.FindIndex(ind=>ind.Equals(dragItemSlot.item))] = dropItemSlot.item;
+            items[dropItemIndex] = dragItemSlot.item;
 
-            //if(firstItemSlot.item.ID == secondItemSlot.item.ID)         // Stacking will happen, might implement later
-            int tempAmount = firstItemSlot.Amount;
-            firstItemSlot.Amount = secondItemSlot.Amount;
-            secondItemSlot.Amount = tempAmount;
-            RefreshUI();
+            //if(dragItemSlot.item.ID == dropItemSlot.item.ID)         // Stacking will happen, might implement later
+            int dragItemAmount = dragItemSlot.Amount;
+            dragItemSlot.Amount = dropItemSlot.Amount;
+            dropItemSlot.Amount = dragItemAmount;
+            ReOrderItemContainer();
+        }*/
+
+        if(dropItemSlot.item != null)
+        {
+            int dropItemIndex = items.FindIndex(ind=>ind.Equals(dropItemSlot.item));                    // Find dropItem
+            items[items.FindIndex(ind=>ind.Equals(dragItemSlot.item))] = dropItemSlot.item;
+            items[dropItemIndex] = dragItemSlot.item;
         }
+
+        //if(dragItemSlot.item.ID == dropItemSlot.item.ID)         // Stacking will happen, might implement later
+        int dropItemAmount = dropItemSlot.Amount;
+        dropItemSlot.Amount = dragItemSlot.Amount;
+
+        Item dragItem = dragItemSlot.item;
+        dragItemSlot.item = dropItemSlot.item;
+        dropItemSlot.item = dragItem;
+        
+        dragItemSlot.Amount = dropItemAmount;
     }
 }

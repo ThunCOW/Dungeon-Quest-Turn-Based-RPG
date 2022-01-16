@@ -43,6 +43,9 @@ public class EquippableItem : Item
         Destroy(this);
     }
 
+    /// <summary>
+    /// Adds all stat modifiers to character
+    /// </summary>
     public void Equip(Character c)
     {
         if(strengthBonus != 0)
@@ -89,6 +92,9 @@ public class EquippableItem : Item
         }
     }
 
+    /// <summary>
+    /// Removes all stat modifiers from character.
+    /// </summary>
     public void Unequip(Character c)
     {
         c.strength.RemoveAllModifiersFromSource(this);

@@ -163,29 +163,13 @@ public class Player : Character
 
     private void InventoryRightClick(BaseItemSlot itemSlot)
     {
-        Item item = itemSlot.item;
-        if(item is EquippableItem)
+        if(itemSlot.item is EquippableItem)
         {
-            EquippableItem equippableItem = item as EquippableItem;
-
-            EquippableItem previousItem;
-            if(equipmentPanel.AddItem(equippableItem, out previousItem))  // add it to the equipmentPanel
-            {
-                equipmentManager.AddItem(equippableItem);       // Add to characterEquipment through equipment manager
-                if(previousItem != null)                        // if we had an item in the same slot equipped already
-                {
-                    inventory.SwapEquipmentItem(item, previousItem);     // return it back to inventory
-                    previousItem.Unequip(this);
-                    UpdateStatValues();
-                }
-                Debug.Log(inventory.RemoveItem(item));
-                equippableItem.Equip(this);
-                UpdateStatValues();
-            }
+            Equip(itemSlot);
         }
-        else if(item is UsableItem)
+        else if(itemSlot.item is UsableItem)
         {
-            UsableItem usableItem = (UsableItem)item;
+            UsableItem usableItem = (UsableItem)itemSlot.item;
             usableItem.Use(this);
             UpdateStatValues();
 
@@ -210,9 +194,25 @@ public class Player : Character
         }
     }
 
-    public void Equip(EquippableItem item)
+    public void Equip(BaseItemSlot itemSlot)
 	{
-		if (inventory.RemoveItem(item))
+        EquippableItem item = itemSlot.item as EquippableItem;
+
+        EquippableItem previousItem;
+        if(equipmentPanel.AddItem(item, out previousItem))    // add it to the equipmentPanel, take out previous item value
+        {
+            equipmentManager.AddItem(item);                   // Add to characterEquipment through equipment manager to change tilemapment manager
+            if(previousItem != null)                                    // if we had an item in the same slot equipped alreadypped already
+            {
+                inventory.SwapEquipmentItem(itemSlot, previousItem);        // return it back to inventory
+                previousItem.Unequip(this);
+                UpdateStatValues();
+            }
+            inventory.RemoveItem(item);
+            item.Equip(this);
+            UpdateStatValues();
+        }
+		/*if (inventory.RemoveItem(item))
 		{
 			EquippableItem previousItem;
 			if (equipmentPanel.AddItem(item, out previousItem))
@@ -230,7 +230,7 @@ public class Player : Character
 			{
 				inventory.AddItem(item);
 			}
-		}
+		}*/
 	}
 
 	public void Unequip(EquippableItem item)
